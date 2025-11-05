@@ -2,6 +2,7 @@
 #define FUNCIONES_H
 
 void imprimirMenu();
-void imprimirSubMenu();
+void imprimirSubMenu(char *titulo);
+void imprimirMenuReportes();
 
 #endif
