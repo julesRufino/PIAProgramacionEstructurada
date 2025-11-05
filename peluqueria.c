@@ -10,6 +10,8 @@ main()
 	do{
 		imprimirMenu();
 		
+		scanf("%d", &opcion);
+		
 		switch(opcion)
 		{
 			case 1:
@@ -36,5 +38,5 @@ main()
 				printf("Saliendo...");
 				break;
 		}
-	}while(opcion);
+	}while(opcion != 6);
 }
