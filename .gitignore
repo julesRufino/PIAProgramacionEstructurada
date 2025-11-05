@@ -1,0 +1,4 @@
+#para ignorar lo que genera el proyecto de dev
+*.dev
+
+*.layout
