@@ -154,3 +154,24 @@ solo regresará al menú principal cuando la opción sea h.
 
 Mostrar mensajes si no hay registros de la opción seleccionada. 
 Desde main validar las opciones a las que se puede ingresar (ya exista información)
+
+Especificaciones técnicas:
+
+· El editor que se utilizará es Dev-C.
+
+· Uso de estructuras (struct) para representar los datos de cada elemento.
+
+· Empleo de funciones para cada operación con sus parámetros correspondientes.
+
+· Utilización de punteros para paso de parámetros y manipulación de estructuras.
+
+· Uso de archivos binarios de acceso directo en todo el proyecto,
+  excepto en la parte indicada, en donde se utilizarán archivos de texto.
+
+· Implementación de menús y submenús que faciliten la navegación.
+
+· Validaciones en todas las entradas del usuario 
+  (por ejemplo, evitar claves duplicadas o registros vacíos).
+
+· En la actividad en MSTeams, se subirá el código fuente 
+  con los archivos de cabecera ne
