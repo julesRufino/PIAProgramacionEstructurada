@@ -128,7 +128,7 @@ void ConsultarCliente(FILE *fptr)
             fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
             fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-            if (cliente.clave == 0 || cliente.activo == 0)
+            if (cliente.clave == 0)
             {
                 printf("Cliente no encontrado.\n");
             }
@@ -140,9 +140,6 @@ void ConsultarCliente(FILE *fptr)
                 printf("Fecha de nacimiento: %s\n", cliente.fechaNacimiento);
                 printf("Telefono: %s\n", cliente.telefono);
                 printf("Correo: %s\n", cliente.correoElectronico);
-                printf("Direccion: %s %d, %s, %s, %s\n",
-                       cliente.calle, cliente.numero,
-                       cliente.colonia, cliente.municipio, cliente.estado);
                 printf("--------------------------\n");
             }
             break;
@@ -199,7 +196,7 @@ void ModificarCliente(FILE *fptr)
     fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
     fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-    if (cliente.clave == 0 || cliente.activo == 0)
+    if (cliente.clave == 0)
     {
         printf("Cliente no encontrado.\n");
     }
@@ -237,13 +234,13 @@ void BorrarCliente(FILE *fptr)
     fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
     fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-    if (cliente.clave == 0 || cliente.activo == 0)
+    if (cliente.clave == 0)
     {
         printf("Cliente no encontrado.\n");
     }
     else
     {
-        cliente.activo = 0;
+
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
         fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);
         fflush(fptr);
