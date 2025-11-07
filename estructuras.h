@@ -30,9 +30,9 @@ struct DatosServicio
 	char duracion[10];
 };
 
-
 struct DatosAgenda
 {
+	int claveAgenda;
 	int claveCliente;
 	int claveEmpleado;
 	int claveServicio;
