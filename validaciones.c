@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "validaciones.h"
 #include "estructuras.h"
 
@@ -65,4 +66,14 @@ void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FIL
 			printf("Archivo 'agenda.dat' creado exitosamente.\n");
 		}
 	}
+}
+
+bool validarPuesto(char *puestoF)
+{
+	bool verificacion = false;
+
+	if(strcmp(puestoF, "estilista") != 0 && strcmp(puestoF, "colorista") != 0 && strcmp(puestoF, "recepcionista") != 0 && strcmp(puestoF, "cordinador") != 0 && strcmp(puestoF, "maquillador") != 0)
+		verificacion = true;
+
+	return verificacion;
 }

@@ -636,15 +636,27 @@ void BorrarServicio(FILE *fptr)
     }
 }
 
-void menuReportes(char opcionF)
+void menuReportes(FILE *fptr, char opcionF)
 {
 	struct datosCliente cliente;
 	
 	int clave;
+    char puesto[50];
 	
 	switch(opcionF)
 	{
 		case 'a':
+            do
+            {
+                printf("Ingrese el puesto: ");
+                fflush(stdin);
+                gets(puesto);
+                if(validarPuesto(puesto))
+                    printf("Error, ingrese un puesto valido.\n");
+            }while(validarPuesto(puesto))
+
+            rewind(fptr);
+            
 			break;
 		
 		case 'b':
