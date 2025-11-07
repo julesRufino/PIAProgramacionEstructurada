@@ -133,5 +133,10 @@ main()
                 break;
                
         }
+       
     }
+    fclose(fClientes);
+    fclose(fEmpleados);
+    fclose(fServicios);
+    fclose(fAgenda);
 }
