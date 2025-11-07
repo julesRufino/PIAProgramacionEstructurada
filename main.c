@@ -3,140 +3,185 @@
 #include "validaciones.h"
 #include "estructuras.h"
 
-
-main()
+int main()
 {
     FILE *fClientes;
     FILE *fEmpleados;
     FILE *fServicios;
     FILE *fAgenda;
-    int opcion=0;
+    int opcion = 0;
     char subopcion;
 
     validarArchivos(&fClientes, &fEmpleados, &fServicios, &fAgenda);
 
-    while(opcion!=6)
+    while (opcion != 6)
     {
         imprimirMenu();
         printf("Opcion: ");
         scanf("%d", &opcion);
-        //validarOpcionMenu(&opcion);
+        fflush(stdin);
+        // validarOpcionMenu(&opcion);
 
-        switch(opcion)
+        switch (opcion)
         {
-            case 1:
+        case 1:
+            do
+            {
                 imprimirSubMenu("CLIENTES");
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
-                //ValidarSubmenu(&subopcion);
-                switch(subopcion)
-                {
-                    case 'A':
-                        //AgregarCliente(fClientes);
-                        break;
-                    case 'B':
-                        //ConsultarCliente(fClientes);
-                        break;
-                    case 'M':
-                        //ModificarCliente(fClientes);
-                        break;
-                    case 'D':
-                        //BorrarCliente(fClientes);
-                        break;
-                    case 'S':
-                        break;
-                }
+                fflush(stdin);
+                // ValidarSubmenu(&subopcion);
 
-                break;
-    
-            case 2:
+                switch (subopcion)
+                {
+                case 'A':
+                    // AgregarCliente(fClientes);
+                    break;
+                case 'B':
+                    // ConsultarCliente(fClientes);
+                    break;
+                case 'M':
+                    // ModificarCliente(fClientes);
+                    break;
+                case 'D':
+                    // BorrarCliente(fClientes);
+                    break;
+                case 'S':
+                    printf("Saliendo del submenu CLIENTES...\n");
+                    break;
+                default:
+                    printf("Opcion no valida.\n");
+                    break;
+                }
+            } while (subopcion != 'S');
+            break;
+
+        case 2:
+            do
+            {
                 imprimirSubMenu("EMPLEADOS");
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
-                //ValidarSubmenu(&subopcion);
-                switch(subopcion)
+                fflush(stdin);
+                // ValidarSubmenu(&subopcion);
+
+                switch (subopcion)
                 {
-                    case 'A':
-                        //AgregarEmpleado(fEmpleados);
-                        break;
-                    case 'B':
-                        //ConsultarEmpleado(fEmpleados);
-                        break;
-                    case 'M':
-                        //ModificarEmpleado(fEmpleados);
-                        break;
-                    case 'D':
-                        //BorrarEmpleado(fEmpleados);
-                        break;
-                    case 'S':
-                        break;
+                case 'A':
+                    // AgregarEmpleado(fEmpleados);
+                    break;
+                case 'B':
+                    // ConsultarEmpleado(fEmpleados);
+                    break;
+                case 'M':
+                    // ModificarEmpleado(fEmpleados);
+                    break;
+                case 'D':
+                    // BorrarEmpleado(fEmpleados);
+                    break;
+                case 'S':
+                    printf("Saliendo del submenu EMPLEADOS...\n");
+                    break;
+                default:
+                    printf("Opcion no valida.\n");
+                    break;
                 }
+            } while (subopcion != 'S');
+            break;
 
-                break;
-
-            case 3:
+        case 3:
+            do
+            {
                 imprimirSubMenu("SERVICIOS");
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
-                //ValidarSubmenu(&subopcion);
-                switch(subopcion)
-                {
-                    case 'A':
-                        //AgregarServicio(fServicios);
-                        break;
-                    case 'B':
-                        //ConsultarServicio(fServicios);
-                        break;
-                    case 'M':
-                        //ModificarServicio(fServicios);
-                        break;
-                    case 'D':
-                        //BorrarServicio(fServicios);
-                        break;
-                    case 'S':
-                        break;
-                }
-                break;
+                fflush(stdin);
+                // ValidarSubmenu(&subopcion);
 
-            case 4:
+                switch (subopcion)
+                {
+                case 'A':
+                    // AgregarServicio(fServicios);
+                    break;
+                case 'B':
+                    // ConsultarServicio(fServicios);
+                    break;
+                case 'M':
+                    // ModificarServicio(fServicios);
+                    break;
+                case 'D':
+                    // BorrarServicio(fServicios);
+                    break;
+                case 'S':
+                    printf("Saliendo del submenu SERVICIOS...\n");
+                    break;
+                default:
+                    printf("Opcion no valida.\n");
+                    break;
+                }
+            } while (subopcion != 'S');
+            break;
+
+        case 4:
+            do
+            {
                 imprimirSubMenu("AGENDA");
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
-                //ValidarSubmenu(&subopcion);
-                switch(subopcion)
-                {
-                    case 'A':
-                        //AgregarCita(fAgenda);
-                        break;
-                    case 'B':
-                        //ConsultarCita(fAgenda);
-                        break;
-                    case 'M':
-                        //ModificarCita(fAgenda);
-                        break;
-                    case 'D':
-                        //BorrarCita(fAgenda);
-                        break;
-                    case 'S':
-                        break;
-                }
-                break;
+                fflush(stdin);
+                // ValidarSubmenu(&subopcion);
 
-            case 5:
+                switch (subopcion)
+                {
+                case 'A':
+                    // AgregarCita(fAgenda);
+                    break;
+                case 'B':
+                    // ConsultarCita(fAgenda);
+                    break;
+                case 'M':
+                    // ModificarCita(fAgenda);
+                    break;
+                case 'D':
+                    // BorrarCita(fAgenda);
+                    break;
+                case 'S':
+                    printf("Saliendo del submenu AGENDA...\n");
+                    break;
+                default:
+                    printf("Opcion no valida.\n");
+                    break;
+                }
+            } while (subopcion != 'S');
+            break;
+
+        case 5:
+            do
+            {
                 imprimirMenuReportes();
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
-                //ValidarSubmenuReporte(&subopcion);
-                break;
-  
-            case 6:
-                break;
-               
+                fflush(stdin);
+                // ValidarSubmenuReporte(&subopcion);
+                if (subopcion == 'S')
+                    printf("Saliendo del submenu REPORTES...\n");
+            } while (subopcion != 'S');
+            break;
+
+        case 6:
+            printf("Saliendo del programa...\n");
+            break;
+
+        default:
+            printf("Opcion no valida.\n");
+            break;
         }
-       
     }
+
     fclose(fClientes);
     fclose(fEmpleados);
     fclose(fServicios);
     fclose(fAgenda);
+    return 0;
 }
