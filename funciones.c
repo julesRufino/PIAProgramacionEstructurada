@@ -121,7 +121,7 @@ void AgregarCliente(FILE *fptr)
 void ConsultarCliente(FILE *fptr)
 {
     struct DatosCliente cliente;
-    int opcion, clave, encontrados, tempClave, contador;
+    int opcion, clave, contador, encontrados;
     char nombreBuscado[50];
 
     do
@@ -170,7 +170,6 @@ void ConsultarCliente(FILE *fptr)
 
             rewind(fptr);
             encontrados = 0;
-            tempClave = 0;
             contador = 0;
 
             while (!feof(fptr) && contador < 100)
@@ -179,8 +178,17 @@ void ConsultarCliente(FILE *fptr)
 
                 if (cliente.activo && strstr(cliente.nombre, nombreBuscado) != NULL)
                 {
+                    printf("\n--- Cliente encontrado ---\n");
+                    printf("Clave: %d\n", cliente.clave);
+                    printf("Nombre: %s\n", cliente.nombre);
+                    printf("Fecha de nacimiento: %s\n", cliente.fechaNacimiento);
+                    printf("Telefono: %s\n", cliente.telefono);
+                    printf("Correo: %s\n", cliente.correoElectronico);
+                    printf("Direccion: %s %d, %s, %s, %s\n",
+                           cliente.calle, cliente.numero,
+                           cliente.colonia, cliente.municipio, cliente.estado);
+                    printf("--------------------------\n");
                     encontrados++;
-                    tempClave = cliente.clave;
                 }
 
                 contador++;
@@ -190,26 +198,7 @@ void ConsultarCliente(FILE *fptr)
             {
                 printf("No se encontraron coincidencias.\n");
             }
-            else if (encontrados == 1)
-            {
-                fseek(fptr, (tempClave - 1) * sizeof(struct DatosCliente), SEEK_SET);
-                fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-                printf("\n--- Cliente encontrado ---\n");
-                printf("Clave: %d\n", cliente.clave);
-                printf("Nombre: %s\n", cliente.nombre);
-                printf("Fecha de nacimiento: %s\n", cliente.fechaNacimiento);
-                printf("Telefono: %s\n", cliente.telefono);
-                printf("Correo: %s\n", cliente.correoElectronico);
-                printf("Direccion: %s %d, %s, %s, %s\n",
-                       cliente.calle, cliente.numero,
-                       cliente.colonia, cliente.municipio, cliente.estado);
-                printf("--------------------------\n");
-            }
-            else
-            {
-                printf("Se encontraron %d coincidencias con ese nombre.\n", encontrados);
-            }
             break;
 
         case 3:
@@ -222,7 +211,6 @@ void ConsultarCliente(FILE *fptr)
 
     } while (opcion != 3);
 }
-
 
 void ModificarCliente(FILE *fptr)
 {
