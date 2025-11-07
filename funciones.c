@@ -189,65 +189,76 @@ void ModificarCliente(FILE *fptr)
 {
     struct DatosCliente cliente;
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del cliente a modificar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
-    fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
-
-    if (cliente.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Cliente no encontrado.\n");
-    }
-    else
-    {
-        printf("\nModificando datos del cliente '%s'\n", cliente.nombre);
-        fflush(stdin);
-
-        printf("Nuevo nombre: ");
-        gets(cliente.nombre);
-        printf("Nueva fecha de nacimiento: ");
-        gets(cliente.fechaNacimiento);
-        printf("Nuevo telefono: ");
-        gets(cliente.telefono);
-        printf("Nuevo correo: ");
-        gets(cliente.correoElectronico);
+        printf("Ingresa la clave del cliente a modificar: ");
+        scanf("%d", &clave);
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
-        fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);
-        fflush(fptr);
+        fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-        printf("Cliente modificado correctamente.\n");
+        if (cliente.clave == 0)
+        {
+            printf("Cliente no encontrado.\n");
+        }
+        else
+        {
+            printf("\nModificando datos del cliente '%s'\n", cliente.nombre);
+            fflush(stdin);
+
+            printf("Nuevo nombre: ");
+            gets(cliente.nombre);
+            printf("Nueva fecha de nacimiento: ");
+            gets(cliente.fechaNacimiento);
+            printf("Nuevo telefono: ");
+            gets(cliente.telefono);
+            printf("Nuevo correo: ");
+            gets(cliente.correoElectronico);
+
+            fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
+            fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);
+            fflush(fptr);
+
+            printf("Cliente modificado correctamente.\n");
+        }
+
+        printf("Deseas modificar otro cliente? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
-
 
 void BorrarCliente(FILE *fptr)
 {
-    struct DatosCliente cliente;
+    struct DatosCliente cliente, vacio = {0, "", "", "", ""};
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del cliente a borrar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
-    fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
-
-    if (cliente.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Cliente no encontrado.\n");
-    }
-    else
-    {
+        printf("Ingresa la clave del cliente a borrar: ");
+        scanf("%d", &clave);
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
-        fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);
-        fflush(fptr);
-        printf("Cliente eliminado correctamente.\n");
+        fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
+
+        if (cliente.clave == 0)
+        {
+            printf("Cliente no encontrado.\n");
+        }
+        else
+        {
+            fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
+            fwrite(&vacio, sizeof(struct DatosCliente), 1, fptr);
+            fflush(fptr);
+            printf("Cliente eliminado correctamente.\n");
+        }
+
+        printf("Deseas borrar otro cliente? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
-
 
 void AgregarEmpleado(FILE *fptr)
 {
@@ -386,64 +397,76 @@ void ModificarEmpleado(FILE *fptr)
 {
     struct DatosEmpleado empleado;
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del empleado a modificar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
-    fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-
-    if (empleado.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Empleado no encontrado.\n");
-    }
-    else
-    {
-        printf("\nModificando datos del empleado '%s'\n", empleado.nombre);
-        fflush(stdin);
-
-        printf("Nuevo nombre: ");
-        gets(empleado.nombre);
-        printf("Nuevo puesto: ");
-        gets(empleado.puesto);
-        printf("Nueva fecha de contratacion: ");
-        gets(empleado.fechaContratacion);
-        printf("Nuevo telefono: ");
-        gets(empleado.telefono);
-        printf("Nuevo correo: ");
-        gets(empleado.correoElectronico);
+        printf("Ingresa la clave del empleado a modificar: ");
+        scanf("%d", &clave);
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
-        fwrite(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-        fflush(fptr);
+        fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
 
-        printf("Empleado modificado correctamente.\n");
+        if (empleado.clave == 0)
+        {
+            printf("Empleado no encontrado.\n");
+        }
+        else
+        {
+            printf("\nModificando datos del empleado '%s'\n", empleado.nombre);
+            fflush(stdin);
+
+            printf("Nuevo nombre: ");
+            gets(empleado.nombre);
+            printf("Nuevo puesto: ");
+            gets(empleado.puesto);
+            printf("Nueva fecha de contratacion: ");
+            gets(empleado.fechaContratacion);
+            printf("Nuevo telefono: ");
+            gets(empleado.telefono);
+            printf("Nuevo correo: ");
+            gets(empleado.correoElectronico);
+
+            fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
+            fwrite(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
+            fflush(fptr);
+
+            printf("Empleado modificado correctamente.\n");
+        }
+
+        printf("Deseas modificar otro empleado? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
 
-
 void BorrarEmpleado(FILE *fptr)
 {
-    struct DatosEmpleado empleado;
+    struct DatosEmpleado empleado, vacio = {0, "", "", "", "", ""};
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del empleado a borrar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
-    fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-
-    if (empleado.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Empleado no encontrado.\n");
-    }
-    else
-    {
-        memset(&empleado, 0, sizeof(struct DatosEmpleado));
+        printf("Ingresa la clave del empleado a borrar: ");
+        scanf("%d", &clave);
+
         fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
-        fwrite(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-        fflush(fptr);
-        printf("Empleado eliminado correctamente.\n");
+        fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
+
+        if (empleado.clave == 0)
+        {
+            printf("Empleado no encontrado.\n");
+        }
+        else
+        {
+            fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
+            fwrite(&vacio, sizeof(struct DatosEmpleado), 1, fptr);
+            fflush(fptr);
+            printf("Empleado eliminado correctamente.\n");
+        }
+
+        printf("Deseas borrar otro empleado? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
 
@@ -578,61 +601,73 @@ void ModificarServicio(FILE *fptr)
 {
     struct DatosServicio servicio;
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del servicio a modificar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
-    fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
-
-    if (servicio.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Servicio no encontrado.\n");
-    }
-    else
-    {
-        printf("\nModificando datos del servicio '%s'\n", servicio.descripcion);
-        fflush(stdin);
-
-        printf("Nueva descripcion: ");
-        gets(servicio.descripcion);
-        printf("Nuevo precio: ");
-        scanf("%f", &servicio.precio);
-        fflush(stdin);
-        printf("Nueva duracion: ");
-        gets(servicio.duracion);
+        printf("Ingresa la clave del servicio a modificar: ");
+        scanf("%d", &clave);
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
-        fwrite(&servicio, sizeof(struct DatosServicio), 1, fptr);
-        fflush(fptr);
+        fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
 
-        printf("Servicio modificado correctamente.\n");
+        if (servicio.clave == 0)
+        {
+            printf("Servicio no encontrado.\n");
+        }
+        else
+        {
+            printf("\nModificando datos del servicio '%s'\n", servicio.descripcion);
+            fflush(stdin);
+
+            printf("Nueva descripcion: ");
+            gets(servicio.descripcion);
+            printf("Nuevo precio: ");
+            scanf("%f", &servicio.precio);
+            fflush(stdin);
+            printf("Nueva duracion: ");
+            gets(servicio.duracion);
+
+            fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
+            fwrite(&servicio, sizeof(struct DatosServicio), 1, fptr);
+            fflush(fptr);
+
+            printf("Servicio modificado correctamente.\n");
+        }
+
+        printf("Deseas modificar otro servicio? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
 
-
 void BorrarServicio(FILE *fptr)
 {
-    struct DatosServicio servicio;
+    struct DatosServicio servicio, vacio = {0, "", 0.0, ""};
     int clave;
+    char continuar = 's';
 
-    printf("Ingresa la clave del servicio a borrar: ");
-    scanf("%d", &clave);
-
-    fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
-    fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
-
-    if (servicio.clave == 0)
+    while (continuar != 'n' && continuar != 'N')
     {
-        printf("Servicio no encontrado.\n");
-    }
-    else
-    {
-        memset(&servicio, 0, sizeof(struct DatosServicio));
+        printf("Ingresa la clave del servicio a borrar: ");
+        scanf("%d", &clave);
+
         fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
-        fwrite(&servicio, sizeof(struct DatosServicio), 1, fptr);
-        fflush(fptr);
-        printf("Servicio eliminado correctamente.\n");
+        fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
+
+        if (servicio.clave == 0)
+        {
+            printf("Servicio no encontrado.\n");
+        }
+        else
+        {
+            fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
+            fwrite(&vacio, sizeof(struct DatosServicio), 1, fptr);
+            fflush(fptr);
+            printf("Servicio eliminado correctamente.\n");
+        }
+
+        printf("Deseas borrar otro servicio? (s/n): ");
+        scanf(" %c", &continuar);
     }
 }
 
