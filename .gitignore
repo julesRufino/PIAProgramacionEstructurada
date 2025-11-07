@@ -6,3 +6,7 @@
 *.json
 
 *.dat
+
+*.o
+
+*.win
