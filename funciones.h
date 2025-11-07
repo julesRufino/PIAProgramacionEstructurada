@@ -28,9 +28,4 @@ void ModificarServicio(FILE *fptr);
 void BorrarServicio(FILE *fptr);
 
 
-void AgregarCita(FILE *fAgenda, FILE *fClientes, FILE *fEmpleados, FILE *fServicios);
-void ConsultarCita(FILE *fAgenda);
-void ModificarCita(FILE *fAgenda);
-void BorrarCita(FILE *fAgenda);
-
 #endif
