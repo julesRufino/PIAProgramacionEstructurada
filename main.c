@@ -183,5 +183,4 @@ int main()
     fclose(fEmpleados);
     fclose(fServicios);
     fclose(fAgenda);
-    return 0;
 }
