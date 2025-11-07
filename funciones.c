@@ -297,3 +297,19 @@ void BorrarCliente(FILE *fptr)
         printf("Cliente eliminado correctamente.\n");
     }
 }
+
+void menuReportes(char opcionF)
+{
+	struct datosCliente cliente;
+	
+	int clave;
+	
+	switch(opcionF)
+	{
+		case 'a':
+			break;
+		
+		case 'b':
+			break;	
+	}
+}

@@ -4,5 +4,5 @@
 void imprimirMenu();
 void imprimirSubMenu(char *titulo);
 void imprimirMenuReportes();
-
+void menuReportes(char);
 #endif

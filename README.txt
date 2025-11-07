@@ -130,7 +130,7 @@ h) Salir
 Opcion:
     Validar que la opcion sean de la letra "a" a la "h"
 
-Si la respuesta es a), mostrar toda la información de los empleados (en forma tabular),
+Si la respuesta es a), mostrar toda la informacion de los empleados (en forma tabular),
 de acuerdo con el puesto indicado (Validar el puesto).
 
 Si la respuesta es b), preguntar el estatus al usuario (validarla) e imprimir la lista 
