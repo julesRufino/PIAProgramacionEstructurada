@@ -67,7 +67,7 @@ void AgregarCliente(FILE *fptr)
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
         fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-        if (cliente.clave != 0 && cliente.activo == 1)
+        if (cliente.clave != 0)
         {
             printf("Esa clave ya existe.\n");
         }
@@ -86,24 +86,8 @@ void AgregarCliente(FILE *fptr)
             printf("Correo electronico: ");
             gets(cliente.correoElectronico);
 
-            printf("Calle: ");
-            gets(cliente.calle);
-
-            printf("Numero: ");
-            scanf("%d", &cliente.numero);
-            fflush(stdin);
-
-            printf("Colonia: ");
-            gets(cliente.colonia);
-
-            printf("Municipio: ");
-            gets(cliente.municipio);
-
-            printf("Estado: ");
-            gets(cliente.estado);
 
             cliente.clave = clave;
-            cliente.activo = 1;
 
             fseek(fptr, (cliente.clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
             fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);
@@ -121,7 +105,7 @@ void AgregarCliente(FILE *fptr)
 void ConsultarCliente(FILE *fptr)
 {
     struct DatosCliente cliente;
-    int opcion, clave, contador, encontrados;
+    int opcion, clave, contador=1, encontrados=0;
     char nombreBuscado[50];
 
     do
@@ -166,27 +150,22 @@ void ConsultarCliente(FILE *fptr)
         case 2:
             printf("Ingresa parte del nombre del cliente a buscar: ");
             fgets(nombreBuscado, sizeof(nombreBuscado), stdin);
-            nombreBuscado[strcspn(nombreBuscado, "\n")] = 0; // eliminar salto de línea
+            nombreBuscado[strcspn(nombreBuscado, "\n")] = 0; 
 
             rewind(fptr);
-            encontrados = 0;
-            contador = 0;
 
             while (!feof(fptr) && contador < 100)
             {
                 fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
-                if (cliente.activo && strstr(cliente.nombre, nombreBuscado) != NULL)
+                if (strstr(cliente.nombre, nombreBuscado) != NULL)
                 {
-                    printf("\n--- Cliente encontrado ---\n");
+                    printf("\n---Coincidencia %d ---\n", contador);
                     printf("Clave: %d\n", cliente.clave);
                     printf("Nombre: %s\n", cliente.nombre);
                     printf("Fecha de nacimiento: %s\n", cliente.fechaNacimiento);
                     printf("Telefono: %s\n", cliente.telefono);
                     printf("Correo: %s\n", cliente.correoElectronico);
-                    printf("Direccion: %s %d, %s, %s, %s\n",
-                           cliente.calle, cliente.numero,
-                           cliente.colonia, cliente.municipio, cliente.estado);
                     printf("--------------------------\n");
                     encontrados++;
                 }
@@ -204,9 +183,6 @@ void ConsultarCliente(FILE *fptr)
         case 3:
             printf("Saliendo de consulta.\n");
             break;
-
-        default:
-            printf("Opcion invalida.\n");
         }
 
     } while (opcion != 3);
@@ -240,17 +216,6 @@ void ModificarCliente(FILE *fptr)
         gets(cliente.telefono);
         printf("Nuevo correo: ");
         gets(cliente.correoElectronico);
-        printf("Nueva calle: ");
-        gets(cliente.calle);
-        printf("Nuevo numero: ");
-        scanf("%d", &cliente.numero);
-        fflush(stdin);
-        printf("Nueva colonia: ");
-        gets(cliente.colonia);
-        printf("Nuevo municipio: ");
-        gets(cliente.municipio);
-        printf("Nuevo estado: ");
-        gets(cliente.estado);
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
         fwrite(&cliente, sizeof(struct DatosCliente), 1, fptr);

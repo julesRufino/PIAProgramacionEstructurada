@@ -8,8 +8,6 @@ struct DatosCliente
 	char fechaNacimiento[20];
 	char telefono[20];
 	char correoElectronico[100];
-	char calle[100];
-	int numero;
 };
 
 
