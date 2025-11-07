@@ -8,12 +8,6 @@ struct DatosCliente
 	char fechaNacimiento[20];
 	char telefono[20];
 	char correoElectronico[100];
-	char calle[100];
-	int numero;
-	char colonia[100];
-	char municipio[100];
-	char estado[100];
-	int activo;
 };
 
 
@@ -25,12 +19,6 @@ struct DatosEmpleado
 	char fechaContratacion[20];
 	char telefono[20];
 	char correoElectronico[100];
-	char calle[100];
-	int numero;
-	char colonia[100];
-	char municipio[100];
-	char estado[100];
-	int activo;
 };
 
 
@@ -40,7 +28,6 @@ struct DatosServicio
 	char descripcion[200];
 	float precio;
 	char duracion[50];
-	int activo;
 };
 
 
@@ -52,7 +39,6 @@ struct DatosAgenda
 	char fecha[20];
 	char hora[10];
 	char estatus[20];
-	int activo;
 };
 
 
