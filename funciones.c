@@ -675,9 +675,11 @@ void BorrarServicio(FILE *fptr)
 void menuReportes(FILE *fptr, char opcionF)
 {
     struct DatosEmpleado empleado;
+    struct DatosAgenda agenda;
 	
+	FILE *clientePtr, *servicioPtr, *empleadoPtr;
 	int clave;
-    char puesto[50];
+    char puesto[50], status[20];
 	
 	switch(opcionF)
 	{
@@ -711,13 +713,42 @@ void menuReportes(FILE *fptr, char opcionF)
                             empleado.correoElectronico);
 
                 }
-
                 fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-
             }
 			break;
 		
 		case 'b':
+			//wiliam aqui va la validacion del status
+/*			printf("Ingrese el status: ");
+			fflush(stdin);
+			gets(status);
+			
+			rewind(fptr);
+			
+			fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			while(!feof(fptr))
+			{
+				if(strcmp(agenda.estatus, status) == 0)
+                {
+					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio)
+                }
+                fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			}*/
 			break;	
 	}
 }
+
+/*
+void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServicio)
+{
+	FILE *clientePtr, *empleadoPtr, *servicioPtr;
+	
+		if((clientePtr = fopen("clientes.dat", "r")) == NULL || (empleadoPtr = fopen("empleados.dat", "r")) == NULL || (servicioPtr = fopen("servicios.dat", "r")) == NULL)
+			printf("Error, no se pudo abrir el archivo.\n");
+		else
+		{
+			
+			while(f)
+		}	
+}*/
+
