@@ -74,7 +74,7 @@ bool validarPuesto(char *puestoF)
 {
 	bool verificacion = false;
 
-	if(strcmp(puestoF, "estilista") != 0 && strcmp(puestoF, "colorista") != 0 && strcmp(puestoF, "recepcionista") != 0 && strcmp(puestoF, "cordinador") != 0 && strcmp(puestoF, "maquillador") != 0)
+	if(strcmp(puestoF, "ESTILISTA") != 0 && strcmp(puestoF, "COLORISTA") != 0 && strcmp(puestoF, "RECEPCIONISTA") != 0 && strcmp(puestoF, "COORDINADOR") != 0 && strcmp(puestoF, "MAQUILLADOR") != 0)
 		verificacion = true;
 
 	return verificacion;

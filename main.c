@@ -69,7 +69,7 @@ int main()
                 switch (subopcion)
                 {
                 case 'A':
-                    // AgregarEmpleado(fEmpleados);
+                    AgregarEmpleado(fEmpleados);
                     break;
                 case 'B':
                     // ConsultarEmpleado(fEmpleados);

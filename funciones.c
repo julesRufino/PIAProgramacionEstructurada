@@ -693,7 +693,7 @@ void menuReportes(FILE *fptr, char opcionF)
 
             rewind(fptr);
 
-            printf("%-8s%-25s%-12s%-15s%-10s%-30s\n",
+            printf("%-6s%-20s%-12s%-15s%-11s%-25s\n",
                     "Clave", "Nombre", "Puesto", "FechaContrat.", "Telefono", "Correo");
             
             fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
@@ -702,7 +702,7 @@ void menuReportes(FILE *fptr, char opcionF)
 
                 if(strcmp(empleado.puesto, puesto) == 0)
                 {
-                    printf("%-8d%-25s%-12s%-15s%-10s%-30s\n",
+                    printf("%-6d%-20s%-12s%-15s%-11s%-25s\n",
                             empleado.clave,
                             empleado.nombre,
                             empleado.puesto,
