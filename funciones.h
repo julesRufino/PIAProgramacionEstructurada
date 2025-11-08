@@ -8,6 +8,7 @@ void imprimirMenu();
 void imprimirSubMenu(char *titulo);
 void imprimirMenuReportes();
 void menuReportes(FILE *, char);
+void imprimirListaAgenda(int *, int *, int *);
 
 
 void AgregarCliente(FILE *fptr);

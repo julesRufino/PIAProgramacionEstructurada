@@ -679,7 +679,7 @@ void menuReportes(FILE *fptr, char opcionF)
 	
 	FILE *clientePtr, *servicioPtr, *empleadoPtr;
 	int clave;
-    char puesto[50], status[20];
+    char puesto[50], status[20], periodo[20];
 	
 	switch(opcionF)
 	{
@@ -719,36 +719,72 @@ void menuReportes(FILE *fptr, char opcionF)
 		
 		case 'b':
 			//wiliam aqui va la validacion del status
-/*			printf("Ingrese el status: ");
+			printf("Ingrese el status: ");
 			fflush(stdin);
 			gets(status);
 			
 			rewind(fptr);
 			
 			fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			
+			printf("%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
+
 			while(!feof(fptr))
 			{
 				if(strcmp(agenda.estatus, status) == 0)
-                {
-					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio)
-                }
+					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
+					
                 fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
-			}*/
+			}
+			break;
+			
+		case 'c':
+			printf("Ingrese el periodo: ");
+			fflush(stdin);
+			gets(periodo);
+			
+			rewind(fptr);
+			
+			fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			
+			printf("%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
+
+			while(!feof(fptr))
+			{
+				if(strcmp(agenda.fecha, periodo) == 0 && strcmp(agenda.estatus, "PROGRAMADO") == 0)
+					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
+                
+                fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			}
 			break;	
 	}
 }
 
-/*
+
 void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServicio)
 {
+	struct DatosEmpleado empleado;
+	struct DatosCliente cliente;
+	struct DatosServicio servicio;
 	FILE *clientePtr, *empleadoPtr, *servicioPtr;
 	
 		if((clientePtr = fopen("clientes.dat", "r")) == NULL || (empleadoPtr = fopen("empleados.dat", "r")) == NULL || (servicioPtr = fopen("servicios.dat", "r")) == NULL)
-			printf("Error, no se pudo abrir el archivo.\n");
+			printf("Error, no se pudieron abrir los archivo.\n");
 		else
 		{
+			fseek(clientePtr, (*claveCliente - 1) * sizeof(struct DatosCliente), SEEK_SET);
+			fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
 			
-			while(f)
+			fseek(empleadoPtr, (*claveEmpleado - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
+			fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+			
+			fseek(servicioPtr, (*claveServicio - 1) * sizeof(struct DatosServicio), SEEK_SET);
+			fread(&servicio, sizeof(struct DatosServicio), 1, servicioPtr);
+			
+			printf("%-25s%-25s%-25s\n", cliente.nombre, empleado.nombre, servicio.descripcion);
+			fclose(clientePtr);
+			fclose(empleadoPtr);
+			fclose(servicioPtr);
 		}	
-}*/
+}
 
