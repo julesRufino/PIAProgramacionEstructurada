@@ -7,7 +7,7 @@
 void imprimirMenu();
 void imprimirSubMenu(char *titulo);
 void imprimirMenuReportes();
-void menuReportes(char opcionF);
+void menuReportes(FILE *, char);
 
 
 void AgregarCliente(FILE *fptr);

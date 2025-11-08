@@ -673,7 +673,7 @@ void BorrarServicio(FILE *fptr)
 
 void menuReportes(FILE *fptr, char opcionF)
 {
-	struct datosCliente cliente;
+    struct DatosEmpleado empleado;
 	
 	int clave;
     char puesto[50];
@@ -688,10 +688,32 @@ void menuReportes(FILE *fptr, char opcionF)
                 gets(puesto);
                 if(validarPuesto(puesto))
                     printf("Error, ingrese un puesto valido.\n");
-            }while(validarPuesto(puesto))
+            }while(validarPuesto(puesto));
 
             rewind(fptr);
+
+            printf("%-8s%-25s%-12s%-15s%-10s%-30s\n",
+                    "Clave", "Nombre", "Puesto", "FechaContrat.", "Telefono", "Correo");
             
+            fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
+            while(!feof(fptr))
+            {                
+
+                if(strcmp(empleado.puesto, puesto) == 0)
+                {
+                    printf("%-8d%-25s%-12s%-15s%-10s%-30s\n",
+                            empleado.clave,
+                            empleado.nombre,
+                            empleado.puesto,
+                            empleado.fechaContratacion,
+                            empleado.telefono,
+                            empleado.correoElectronico);
+
+                }
+
+                fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
+
+            }
 			break;
 		
 		case 'b':

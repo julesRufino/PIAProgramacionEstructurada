@@ -164,9 +164,10 @@ int main()
                 scanf(" %c", &subopcion);
                 fflush(stdin);
                 // ValidarSubmenuReporte(&subopcion);
-                if (subopcion == 'S')
+                menuReportes(fEmpleados, subopcion);
+                if (subopcion == 'h')
                     printf("Saliendo del submenu REPORTES...\n");
-            } while (subopcion != 'S');
+            } while (subopcion != 'h');
             break;
 
         case 6:

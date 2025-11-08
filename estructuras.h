@@ -10,17 +10,15 @@ struct DatosCliente
 	char correoElectronico[100];
 };
 
-
 struct DatosEmpleado
 {
 	int clave;
 	char nombre[100];
-	char puesto[10];
+	char puesto[15];
 	char fechaContratacion[20];
 	char telefono[20];
 	char correoElectronico[100];
 };
-
 
 struct DatosServicio
 {
