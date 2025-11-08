@@ -3,6 +3,7 @@
 #include "estructuras.h"
 #include "funciones.h"
 #include "validaciones.h"
+#include <stdbool.h>
 
 void imprimirMenu()
 {
