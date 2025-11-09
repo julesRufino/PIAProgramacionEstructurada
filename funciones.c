@@ -674,11 +674,12 @@ void BorrarServicio(FILE *fptr)
 
 void menuReportes(char opcionF)
 {
+	struct DatosCliente cliente;
     struct DatosEmpleado empleado;
     struct DatosAgenda agenda;
     struct DatosServicio servicio;
 	
-	FILE *clientePtr, *servicioPtr, *empleadoPtr, *agendaPtr;
+	FILE *clientePtr, *servicioPtr, *empleadoPtr, *agendaPtr, *archivoCliente, *archivoEmpleado;
 	int clave;
     char puesto[50], status[20], periodo[20], fechaVentaInicio[20], fechaVentaFin[20];
 	
@@ -796,12 +797,43 @@ void menuReportes(char opcionF)
 			break;
 			
 		case 'e':
+			printf("Generando archivo...");
 			
-			
+			if((archivoCliente = fopen("archivoCliente.txt", "w")) == NULL || (clientePtr = fopen("clientes.dat", "r")) == NULL)
+				printf("Error, hubo un problema al acceder a los archivos.\n");
+			else
+			{
+				fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
+				
+				while(!feof(clientePtr))
+				{
+					fprintf(archivoCliente, "%d %s %s %s %s %s\n", cliente.clave, cliente.nombre, cliente.fechaNacimiento, cliente.telefono, cliente.correoElectronico, cliente.direccion);	
+					fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
+
+				}
+				fclose(archivoCliente);
+				fclose(clientePtr);
+			}
 			break;
 		
 		case 'f':
-		
+			printf("Generando archivo...");
+			
+			if((archivoEmpleado = fopen("archivoEmpleado.txt", "w")) == NULL || (empleadoPtr = fopen("empleados.dat", "r")) == NULL)
+				printf("Error, hubo un problema al acceder a los archivos.\n");
+			else
+			{
+				fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+				
+				while(!feof(empleadoPtr))
+				{
+					fprintf(archivoEmpleado, "%d %s %s %s %s %s\n", empleado.clave, empleado.nombre, empleado.puesto, empleado.fechaContratacion, empleado.telefono, empleado.correoElectronico);	
+					fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+
+				}
+				fclose(archivoEmpleado);
+				fclose(empleadoPtr);
+			}
 			break;
 			
 		case 'g':
