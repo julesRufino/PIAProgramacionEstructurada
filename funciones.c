@@ -844,13 +844,86 @@ void menuReportes(char opcionF)
 			
 			switch(opcion)
 			{
-				case 1:
-					
-					break;
-				
-				case 2:
-					
-					break;
+        case 1:
+        	
+            if((archivoCliente = fopen("archivoCliente.txt", "r")) == NULL)
+                printf("Error al abrir archivoCliente.txt\n");
+            else
+            {
+                printf("\n%-10s%-20s%-15s%-20s%-30s%-30s\n",
+                       "Clave", "Nombre", "Nacimiento", "Teléfono", "Correo", "Dirección");
+                printf("---------------------------------------------------------------------------------------------------------------\n");
+
+                fscanf(archivoCliente, "%d %s %s %s %s %s",
+                       &cliente.clave,
+                       cliente.nombre,
+                       cliente.fechaNacimiento,
+                       cliente.telefono,
+                       cliente.correoElectronico,
+                       cliente.direccion);
+
+                while(!feof(archivoCliente))
+                {
+                    printf("%-10d%-20s%-15s%-20s%-30s%-30s\n",
+                           cliente.clave,
+                           cliente.nombre,
+                           cliente.fechaNacimiento,
+                           cliente.telefono,
+                           cliente.correoElectronico,
+                           cliente.direccion);
+
+                    fscanf(archivoCliente, "%d %s %s %s %s %s",
+                           &cliente.clave,
+                           cliente.nombre,
+                           cliente.fechaNacimiento,
+                           cliente.telefono,
+                           cliente.correoElectronico,
+                           cliente.direccion);
+                }
+
+                fclose(archivoCliente);
+            }
+            break;
+
+        case 2:
+            if((archivoEmpleado = fopen("archivoEmpleado.txt", "r")) == NULL)
+                printf("Error al abrir archivoEmpleado.txt\n");
+            else
+            {
+                printf("\n%-10s%-20s%-15s%-20s%-20s%-30s\n",
+                       "Clave", "Nombre", "Puesto", "Contratación", "Teléfono", "Correo");
+                printf("----------------------------------------------------------------------------------------------------\n");
+
+                fscanf(archivoEmpleado, "%d %s %s %s %s %s",
+                       &empleado.clave,
+                       empleado.nombre,
+                       empleado.puesto,
+                       empleado.fechaContratacion,
+                       empleado.telefono,
+                       empleado.correoElectronico);
+
+                while(!feof(archivoEmpleado))
+                {
+                    printf("%-10d%-20s%-15s%-20s%-20s%-30s\n",
+                           empleado.clave,
+                           empleado.nombre,
+                           empleado.puesto,
+                           empleado.fechaContratacion,
+                           empleado.telefono,
+                           empleado.correoElectronico);
+
+                    fscanf(archivoEmpleado, "%d %s %s %s %s %s",
+                           &empleado.clave,
+                           empleado.nombre,
+                           empleado.puesto,
+                           empleado.fechaContratacion,
+                           empleado.telefono,
+                           empleado.correoElectronico);
+                }
+
+                fclose(archivoEmpleado);
+            }
+            break;
 			}
 			
 			break;
