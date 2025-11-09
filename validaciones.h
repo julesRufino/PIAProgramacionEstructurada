@@ -5,5 +5,6 @@
 
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda);
 bool validarPuesto(char *);
+bool fechaEnRango(char *, char *, char *);
 
 #endif

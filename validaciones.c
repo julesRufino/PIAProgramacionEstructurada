@@ -79,3 +79,24 @@ bool validarPuesto(char *puestoF)
 
 	return verificacion;
 }
+
+bool fechaEnRango(char *fecha, char *inicio, char *fin)
+{
+    bool verificacion = false;
+    int d, m, a;
+    int di, mi, ai;
+    int df, mf, af;
+
+    sscanf(fecha, "%d/%d/%d", &d, &m, &a);
+    sscanf(inicio, "%d/%d/%d", &di, &mi, &ai);
+    sscanf(fin, "%d/%d/%d", &df, &mf, &af);
+
+    long f = a * 10000 + m * 100 + d;
+    long fi = ai * 10000 + mi * 100 + di;
+    long ff = af * 10000 + mf * 100 + df;
+
+    if (f < fi || f > ff)
+        verificacion = true; 
+        
+    return verificacion;
+}

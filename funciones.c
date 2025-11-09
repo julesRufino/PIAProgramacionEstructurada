@@ -672,14 +672,15 @@ void BorrarServicio(FILE *fptr)
     }
 }
 
-void menuReportes(FILE *fptr, char opcionF)
+void menuReportes(char opcionF)
 {
     struct DatosEmpleado empleado;
     struct DatosAgenda agenda;
+    struct DatosServicio servicio;
 	
-	FILE *clientePtr, *servicioPtr, *empleadoPtr;
+	FILE *clientePtr, *servicioPtr, *empleadoPtr, *agendaPtr;
 	int clave;
-    char puesto[50], status[20], periodo[20];
+    char puesto[50], status[20], periodo[20], fechaVentaInicio[20], fechaVentaFin[20];
 	
 	switch(opcionF)
 	{
@@ -693,13 +694,13 @@ void menuReportes(FILE *fptr, char opcionF)
                     printf("Error, ingrese un puesto valido.\n");
             }while(validarPuesto(puesto));
 
-            rewind(fptr);
+            empleadoPtr = fopen("empleados.dat", "r");
 
             printf("%-6s%-20s%-12s%-15s%-11s%-25s\n",
                     "Clave", "Nombre", "Puesto", "FechaContrat.", "Telefono", "Correo");
             
-            fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
-            while(!feof(fptr))
+            fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+            while(!feof(empleadoPtr))
             {                
 
                 if(strcmp(empleado.puesto, puesto) == 0)
@@ -713,8 +714,11 @@ void menuReportes(FILE *fptr, char opcionF)
                             empleado.correoElectronico);
 
                 }
-                fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
+                fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
             }
+            
+            fclose(empleadoPtr);
+            
 			break;
 		
 		case 'b':
@@ -723,19 +727,21 @@ void menuReportes(FILE *fptr, char opcionF)
 			fflush(stdin);
 			gets(status);
 			
-			rewind(fptr);
+			agendaPtr = fopen("agenda.dat", "r");
 			
-			fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
 			
 			printf("%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
 
-			while(!feof(fptr))
+			while(!feof(agendaPtr))
 			{
 				if(strcmp(agenda.estatus, status) == 0)
 					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
 					
-                fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+                fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
 			}
+			
+			fclose(agendaPtr);
 			break;
 			
 		case 'c':
@@ -743,19 +749,67 @@ void menuReportes(FILE *fptr, char opcionF)
 			fflush(stdin);
 			gets(periodo);
 			
-			rewind(fptr);
+			agendaPtr = fopen("agenda.dat", "r");
 			
-			fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
 			
 			printf("%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
 
-			while(!feof(fptr))
+			while(!feof(agendaPtr))
 			{
 				if(strcmp(agenda.fecha, periodo) == 0 && strcmp(agenda.estatus, "PROGRAMADO") == 0)
 					imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
                 
-                fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+                fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
 			}
+			
+			fclose(agendaPtr);
+			break;
+			
+		case 'd':
+			printf("Ingrese inicio del periodo de ventas (dd/mm/aaaa): ");
+			fflush(stdin);
+			gets(fechaVentaInicio);
+			
+			printf("Ingrese fin del periodo de ventas (dd/mm/aaaa): ");
+			fflush(stdin);
+			gets(fechaVentaFin);			
+			
+			agendaPtr = fopen("agenda.dat", "r");
+			
+			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+			
+ 			printf("\n%-25s%-15s%-15s\n", "Servicio", "Fecha", "Precio");
+    		printf("----------------------------------------------------\n");
+			
+			while(!feof(agendaPtr))
+			{
+ 			if (strcmp(agenda.estatus, "REALIZADO") == 0 && fechaEnRango(agenda.fecha, fechaVentaInicio, fechaVentaFin) == false)
+                imprimirVenta(&agenda);
+
+            fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+            
+        	}
+        	
+        	fclose(agendaPtr);
+        
+			break;
+			
+		case 'e':
+			
+			
+			break;
+		
+		case 'f':
+		
+			break;
+			
+		case 'g':
+		
+			break;
+			
+		case 'h':
+			printf("Saliendo...");
 			break;	
 	}
 }
@@ -787,4 +841,23 @@ void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServic
 			fclose(servicioPtr);
 		}	
 }
+
+void imprimirVenta(struct DatosAgenda *agenda)
+{
+    FILE *servicioPtr;
+    struct DatosServicio servicio;
+
+    if ((servicioPtr = fopen("servicios.dat", "r")) == NULL)
+        printf("Error al abrir servicios.dat\n");
+    else
+    {
+        fseek(servicioPtr, (agenda->claveServicio - 1) * sizeof(struct DatosServicio), SEEK_SET);
+        fread(&servicio, sizeof(struct DatosServicio), 1, servicioPtr);
+
+        printf("%-25s%-25s$%-14.2f\n", servicio.descripcion, agenda->fecha, servicio.precio);
+
+        fclose(servicioPtr);
+    }
+}
+
 

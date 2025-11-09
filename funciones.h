@@ -2,14 +2,15 @@
 #define FUNCIONES_H
 
 #include <stdio.h>
+#include "estructuras.h"
 
 
 void imprimirMenu();
 void imprimirSubMenu(char *titulo);
 void imprimirMenuReportes();
-void menuReportes(FILE *, char);
+void menuReportes(char);
 void imprimirListaAgenda(int *, int *, int *);
-
+void imprimirVenta(struct DatosAgenda *);
 
 void AgregarCliente(FILE *fptr);
 void ConsultarCliente(FILE *fptr);

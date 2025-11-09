@@ -20,7 +20,7 @@ int main()
         printf("Opcion: ");
         scanf("%d", &opcion);
         fflush(stdin);
-        // validarOpcionMenu(&opcion);
+        //validarOpcionMenu(&opcion);
 
         switch (opcion)
         {
@@ -31,21 +31,21 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                // ValidarSubmenu(&subopcion);
+                //ValidarSubmenu(&subopcion);
 
                 switch (subopcion)
                 {
                 case 'A':
-                    // AgregarCliente(fClientes);
+                    AgregarCliente(fClientes);
                     break;
                 case 'B':
-                    // ConsultarCliente(fClientes);
+                    //ConsultarCliente(fClientes);
                     break;
                 case 'M':
-                    // ModificarCliente(fClientes);
+                    //ModificarCliente(fClientes);
                     break;
                 case 'D':
-                    // BorrarCliente(fClientes);
+                    //BorrarCliente(fClientes);
                     break;
                 case 'S':
                     printf("Saliendo del submenu CLIENTES...\n");
@@ -64,7 +64,7 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                // ValidarSubmenu(&subopcion);
+                //ValidarSubmenu(&subopcion);
 
                 switch (subopcion)
                 {
@@ -72,13 +72,13 @@ int main()
                     AgregarEmpleado(fEmpleados);
                     break;
                 case 'B':
-                    // ConsultarEmpleado(fEmpleados);
+                   // ConsultarEmpleado(fEmpleados);
                     break;
                 case 'M':
-                    // ModificarEmpleado(fEmpleados);
+                    //ModificarEmpleado(fEmpleados);
                     break;
                 case 'D':
-                    // BorrarEmpleado(fEmpleados);
+                    //BorrarEmpleado(fEmpleados);
                     break;
                 case 'S':
                     printf("Saliendo del submenu EMPLEADOS...\n");
@@ -97,21 +97,21 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                // ValidarSubmenu(&subopcion);
+                //ValidarSubmenu(&subopcion);
 
                 switch (subopcion)
                 {
                 case 'A':
-                    // AgregarServicio(fServicios);
+                    AgregarServicio(fServicios);
                     break;
                 case 'B':
-                    // ConsultarServicio(fServicios);
+                    //ConsultarServicio(fServicios);
                     break;
                 case 'M':
-                    // ModificarServicio(fServicios);
+                    //ModificarServicio(fServicios);
                     break;
                 case 'D':
-                    // BorrarServicio(fServicios);
+                    //BorrarServicio(fServicios);
                     break;
                 case 'S':
                     printf("Saliendo del submenu SERVICIOS...\n");
@@ -130,21 +130,21 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                // ValidarSubmenu(&subopcion);
+                //ValidarSubmenu(&subopcion);
 
                 switch (subopcion)
                 {
                 case 'A':
-                    // AgregarCita(fAgenda);
+                    //AgregarCita(fAgenda);
                     break;
                 case 'B':
-                    // ConsultarCita(fAgenda);
+                    //ConsultarCita(fAgenda);
                     break;
                 case 'M':
-                    // ModificarCita(fAgenda);
+                    //ModificarCita(fAgenda);
                     break;
                 case 'D':
-                    // BorrarCita(fAgenda);
+                   //BorrarCita(fAgenda);
                     break;
                 case 'S':
                     printf("Saliendo del submenu AGENDA...\n");
@@ -164,7 +164,7 @@ int main()
                 scanf(" %c", &subopcion);
                 fflush(stdin);
                 // ValidarSubmenuReporte(&subopcion);
-                menuReportes(fEmpleados, subopcion);
+                menuReportes(subopcion);
                 if (subopcion == 'h')
                     printf("Saliendo del submenu REPORTES...\n");
             } while (subopcion != 'h');
