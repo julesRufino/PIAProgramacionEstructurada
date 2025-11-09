@@ -39,19 +39,16 @@ int main()
                     AgregarCliente(fClientes);
                     break;
                 case 'B':
-                    //ConsultarCliente(fClientes);
+                    ConsultarCliente(fClientes);
                     break;
                 case 'M':
-                    //ModificarCliente(fClientes);
+                    ModificarCliente(fClientes);
                     break;
                 case 'D':
-                    //BorrarCliente(fClientes);
+                    BorrarCliente(fClientes);
                     break;
                 case 'S':
                     printf("Saliendo del submenu CLIENTES...\n");
-                    break;
-                default:
-                    printf("Opcion no valida.\n");
                     break;
                 }
             } while (subopcion != 'S');
@@ -72,19 +69,16 @@ int main()
                     AgregarEmpleado(fEmpleados);
                     break;
                 case 'B':
-                   // ConsultarEmpleado(fEmpleados);
+                    ConsultarEmpleado(fEmpleados);
                     break;
                 case 'M':
-                    //ModificarEmpleado(fEmpleados);
+                    ModificarEmpleado(fEmpleados);
                     break;
                 case 'D':
-                    //BorrarEmpleado(fEmpleados);
+                    BorrarEmpleado(fEmpleados);
                     break;
                 case 'S':
                     printf("Saliendo del submenu EMPLEADOS...\n");
-                    break;
-                default:
-                    printf("Opcion no valida.\n");
                     break;
                 }
             } while (subopcion != 'S');
@@ -105,19 +99,16 @@ int main()
                     AgregarServicio(fServicios);
                     break;
                 case 'B':
-                    //ConsultarServicio(fServicios);
+                    ConsultarServicio(fServicios);
                     break;
                 case 'M':
-                    //ModificarServicio(fServicios);
+                    ModificarServicio(fServicios);
                     break;
                 case 'D':
                     //BorrarServicio(fServicios);
                     break;
                 case 'S':
                     printf("Saliendo del submenu SERVICIOS...\n");
-                    break;
-                default:
-                    printf("Opcion no valida.\n");
                     break;
                 }
             } while (subopcion != 'S');
@@ -149,9 +140,6 @@ int main()
                 case 'S':
                     printf("Saliendo del submenu AGENDA...\n");
                     break;
-                default:
-                    printf("Opcion no valida.\n");
-                    break;
                 }
             } while (subopcion != 'S');
             break;
@@ -174,9 +162,6 @@ int main()
             printf("Saliendo del programa...\n");
             break;
 
-        default:
-            printf("Opcion no valida.\n");
-            break;
         }
     }
 
