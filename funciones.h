@@ -29,7 +29,7 @@ void ConsultarServicio(FILE *fptr);
 void ModificarServicio(FILE *fptr);
 void BorrarServicio(FILE *fptr);
 
-void AgregarCita(FILE *fAgenda);
+void AgregarCita(FILE *fptr);
 void ConsultarCita(FILE *fptr);
 void ModificarCita(FILE *fptr);
 void BorrarCita(FILE *fptr);

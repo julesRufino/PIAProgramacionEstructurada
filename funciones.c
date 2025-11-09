@@ -672,14 +672,14 @@ void BorrarServicio(FILE *fptr)
     }
 }
 
-void AgregarCita(FILE *fAgenda)
+void AgregarCita(FILE *fptr)
 {
     struct DatosAgenda agenda;
     int i = 0, encontrado = 0;
 
-    rewind(fAgenda);
+    rewind(fptr);
 
-    while (fread(&agenda, sizeof(struct DatosAgenda), 1, fAgenda) == 1 && i < 100)
+    while (fread(&agenda, sizeof(struct DatosAgenda), 1, fptr) == 1 && i < 100)
     {
         if (agenda.claveAgenda == 0 && encontrado == 0)
             encontrado = 1;
@@ -719,9 +719,9 @@ void AgregarCita(FILE *fAgenda)
     fgets(agenda.estatus, sizeof(agenda.estatus), stdin);
     agenda.estatus[strcspn(agenda.estatus, "\n")] = '\0';
 
-    fseek(fAgenda, i * sizeof(struct DatosAgenda), SEEK_SET);
-    fwrite(&agenda, sizeof(struct DatosAgenda), 1, fAgenda);
-    fflush(fAgenda);
+    fseek(fptr, i * sizeof(struct DatosAgenda), SEEK_SET);
+    fwrite(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+    fflush(fptr);
 
     printf("Registro de agenda agregado con clave %d.\n", agenda.claveAgenda);
 }
@@ -751,35 +751,29 @@ void ConsultarCita(FILE *fptr)
             printf("Ingresa la clave de agenda: ");
             scanf("%d", &clave);
 
-            if (clave < 1 || clave > 100)
-            {
-                printf("Clave fuera de rango.\n");
-                break;
-            }
-
             fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
-            if (fread(&cita, sizeof(struct DatosAgenda), 1, fptr) == 1 && cita.claveAgenda != 0)
+            fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
+
+            if (cita.claveAgenda != 0)
             {
                 printf("\n%-10s%-12s%-12s%-12s%-12s%-10s%-12s\n",
-                       "Agenda", "Cliente", "Empleado", "Servicio", "Fecha", "Hora", "Estatus");
+                    "Agenda", "Cliente", "Empleado", "Servicio", "Fecha", "Hora", "Estatus");
                 printf("%-10d%-12d%-12d%-12d%-12s%-10s%-12s\n",
-                       cita.claveAgenda, cita.claveCliente, cita.claveEmpleado, cita.claveServicio,
-                       cita.fecha, cita.hora, cita.estatus);
+                    cita.claveAgenda, cita.claveCliente, cita.claveEmpleado, cita.claveServicio,
+                    cita.fecha, cita.hora, cita.estatus);
             }
             else
-            {
                 printf("No se encontró la cita.\n");
-            }
             break;
 
-        case 2: // Buscar por clave de cliente
+        case 2:
             printf("Ingresa la clave del cliente: ");
             scanf("%d", &clave);
 
             printf("\n%-10s%-12s%-12s%-12s%-12s%-10s%-12s\n",
                    "Agenda", "Cliente", "Empleado", "Servicio", "Fecha", "Hora", "Estatus");
 
-            while (!feof(fptr) && fread(&cita, sizeof(struct DatosAgenda), 1, fptr) == 1)
+            while (!feof(fptr))
             {
                 if (cita.claveAgenda != 0 && cita.claveCliente == clave)
                 {
@@ -794,14 +788,14 @@ void ConsultarCita(FILE *fptr)
                 printf("No se encontraron citas para ese cliente.\n");
             break;
 
-        case 3: // Buscar por clave de empleado
+        case 3:
             printf("Ingresa la clave del empleado: ");
             scanf("%d", &clave);
 
             printf("\n%-10s%-12s%-12s%-12s%-12s%-10s%-12s\n",
                    "Agenda", "Cliente", "Empleado", "Servicio", "Fecha", "Hora", "Estatus");
 
-            while (!feof(fptr) && fread(&cita, sizeof(struct DatosAgenda), 1, fptr) == 1)
+            while (!feof(fptr))
             {
                 if (cita.claveAgenda != 0 && cita.claveEmpleado == clave)
                 {
@@ -816,14 +810,14 @@ void ConsultarCita(FILE *fptr)
                 printf("No se encontraron citas para ese empleado.\n");
             break;
 
-        case 4: // Buscar por clave de servicio
+        case 4:
             printf("Ingresa la clave del servicio: ");
             scanf("%d", &clave);
 
             printf("\n%-10s%-12s%-12s%-12s%-12s%-10s%-12s\n",
                    "Agenda", "Cliente", "Empleado", "Servicio", "Fecha", "Hora", "Estatus");
 
-            while (!feof(fptr) && fread(&cita, sizeof(struct DatosAgenda), 1, fptr) == 1)
+            while (!feof(fptr))
             {
                 if (cita.claveAgenda != 0 && cita.claveServicio == clave)
                 {
@@ -861,9 +855,7 @@ void ModificarCita(FILE *fptr)
         fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
 
         if (cita.claveAgenda == 0)
-        {
             printf("Cita no encontrada.\n");
-        }
         else
         {
             printf("\nModificando cita #%d\n", cita.claveAgenda);
@@ -902,9 +894,7 @@ void BorrarCita(FILE *fptr)
         fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
 
         if (cita.claveAgenda == 0)
-        {
             printf("Cita no encontrada.\n");
-        }
         else
         {
             fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
