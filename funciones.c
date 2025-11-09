@@ -680,7 +680,7 @@ void menuReportes(char opcionF)
     struct DatosServicio servicio;
 	
 	FILE *clientePtr, *servicioPtr, *empleadoPtr, *agendaPtr, *archivoCliente, *archivoEmpleado;
-	int clave;
+	int clave, opcion;
     char puesto[50], status[20], periodo[20], fechaVentaInicio[20], fechaVentaFin[20];
 	
 	switch(opcionF)
@@ -837,7 +837,22 @@ void menuReportes(char opcionF)
 			break;
 			
 		case 'g':
-		
+			printf("opciones de archivos a visualizar:\n");
+			printf("1. Cliente\n");
+			printf("2. Emppleado\n");
+			scanf("%d", &opcion);
+			
+			switch(opcion)
+			{
+				case 1:
+					
+					break;
+				
+				case 2:
+					
+					break;
+			}
+			
 			break;
 			
 		case 'h':
