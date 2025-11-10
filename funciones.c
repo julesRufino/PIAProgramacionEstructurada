@@ -1064,6 +1064,7 @@ void BorrarCita(FILE *fptr)
 
 void menuReportes(char opcionF)
 {
+	int contador;
     struct DatosCliente cliente;
     struct DatosEmpleado empleado;
     struct DatosAgenda agenda;
@@ -1093,7 +1094,8 @@ void menuReportes(char opcionF)
             
 			fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
             
-            while(!feof(empleadoPtr))
+            contador = 1;
+            while(!feof(empleadoPtr) && contador <= 100)
             {
                 if(empleado.clave != 0 && strcmp(empleado.puesto, puesto) == 0)
                 {
@@ -1107,6 +1109,7 @@ void menuReportes(char opcionF)
                 }
                 
                 fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+                contador++;
 
             }
             
@@ -1129,11 +1132,15 @@ void menuReportes(char opcionF)
             printf("------------------------------------------------------------------------\n");
 			
 			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+			
+			contador=1;
+			
             while(!feof(agendaPtr))
             {
                 if(agenda.claveAgenda != 0 && strcmp(agenda.estatus, status) == 0)
                     imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
                 fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+                contador++;
             }
             
             fclose(agendaPtr);
@@ -1155,11 +1162,14 @@ void menuReportes(char opcionF)
             printf("------------------------------------------------------------------------\n");
 
 			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
-            while(!feof(agendaPtr))
+			contador=1;
+            while(!feof(agendaPtr) && contador<=100)
             {
                 if(agenda.claveAgenda != 0 && strcmp(agenda.fecha, periodo) == 0 && strcmp(agenda.estatus, "PROGRAMADO") == 0)
                     imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
                 fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+                
+                contador++;
 
             }
             
@@ -1192,14 +1202,15 @@ void menuReportes(char opcionF)
             
             fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
             
-            while(!feof(agendaPtr))
+            contador= 1;
+            while(!feof(agendaPtr) && contador <= 100)
             {
                 if (agenda.claveAgenda != 0 && strcmp(agenda.estatus, "REALIZADO") == 0 && 
                     !fechaEnRango(agenda.fecha, fechaVentaInicio, fechaVentaFin))
                     imprimirVenta(&agenda);
                     
-            fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
-
+            	fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+            	contador++;
             }
             
             fclose(agendaPtr);
@@ -1215,7 +1226,9 @@ void menuReportes(char opcionF)
             	
             	fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
             	
-                while(!feof(clientePtr))
+            	contador=1;
+            	
+                while(!feof(clientePtr) && contador <= 100)
                 {
                     if(cliente.clave != 0)
                     {
@@ -1226,7 +1239,7 @@ void menuReportes(char opcionF)
                     }
                     
                 	fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
-
+                	contador++;
                 }
                 fclose(archivoCliente);
                 fclose(clientePtr);
@@ -1242,7 +1255,8 @@ void menuReportes(char opcionF)
             else
             {
             	fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
-                while(!feof(empleadoPtr))
+            	contador=1;
+                while(!feof(empleadoPtr) && contador<=100)
                 {
                     if(empleado.clave != 0)
                     {
@@ -1253,7 +1267,7 @@ void menuReportes(char opcionF)
                     }
                     
                     fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
-
+                    contador++;
                 }
                 fclose(archivoEmpleado);
                 fclose(empleadoPtr);
@@ -1284,7 +1298,8 @@ void menuReportes(char opcionF)
                                cliente.telefono, cliente.correoElectronico, cliente.calle,
                                cliente.numero, cliente.colonia, cliente.municipio, cliente.estado);
                         
-                        while(!feof(archivoCliente))
+                        contador=1;
+                        while(!feof(archivoCliente) && contador<=100)
                         {
                             printf("%-10d%-20s%-15s%-20s%-30s%-30s\n",
                                    cliente.clave, cliente.nombre, cliente.fechaNacimiento,
@@ -1294,6 +1309,7 @@ void menuReportes(char opcionF)
 	                               &cliente.clave, cliente.nombre, cliente.fechaNacimiento,
 	                               cliente.telefono, cliente.correoElectronico, cliente.calle,
 	                               cliente.numero, cliente.colonia, cliente.municipio, cliente.estado);
+	                        contador++;
                         }
                         fclose(archivoCliente);
                     }
@@ -1325,10 +1341,6 @@ void menuReportes(char opcionF)
                         }
                         fclose(archivoEmpleado);
                     }
-                    break;
-                    
-                default:
-                    printf("Opcion no valida.\n");
                     break;
             }
             break;
