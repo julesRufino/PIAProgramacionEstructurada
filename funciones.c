@@ -348,10 +348,11 @@ void AgregarEmpleado(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-            printf("Ingresa la clave del empleado (1-100): ");
+        do
+        {
+        	printf("Ingresa la clave del empleado (1-100): ");
             scanf("%d", &clave);
-            if (validarClave(clave))
-                printError("Clave fuera de rango (1-100).\n");
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
         fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
@@ -526,12 +527,21 @@ void ModificarEmpleado(FILE *fptr)
         else
         {
             printf("\nModificando datos del empleado '%s'\n", empleado.nombre);
-            fflush(stdin);
 
-            printf("Nuevo nombre: ");
-            gets(empleado.nombre);
-            printf("Nuevo puesto: ");
-            gets(empleado.puesto);
+			do
+			{
+				printf("Nuevo nombre: ");
+	            fflush(stdin);
+	            gets(empleado.nombre);
+			}while(validarCadena(empleado.nombre));
+			
+ 			do
+ 			{
+ 				printf("Nuevo puesto: ");
+	            fflush(stdin);
+	            gets(empleado.puesto);
+			 }while(validarPuesto(empleado.puesto));
+			 
             printf("Nueva fecha de contratacion: ");
             gets(empleado.fechaContratacion);
             printf("Nuevo telefono: ");
@@ -747,15 +757,18 @@ void ModificarServicio(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave del servicio a modificar: ");
-        scanf("%d", &clave);
+		do
+		{
+			printf("Ingresa la clave del servicio a modificar: ");
+        	scanf("%d", &clave);
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
         fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
 
         if (servicio.clave == 0)
         {
-            printf("Servicio no encontrado.\n");
+            printError("Servicio no encontrado.\n");
         }
         else
         {
@@ -777,8 +790,11 @@ void ModificarServicio(FILE *fptr)
             printf("Servicio modificado correctamente.\n");
         }
 
-        printf("Deseas modificar otro servicio? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+        {
+        	printf("Deseas modificar otro servicio? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -790,15 +806,18 @@ void BorrarServicio(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave del servicio a borrar: ");
-        scanf("%d", &clave);
+		do
+		{
+			printf("Ingresa la clave del servicio a borrar: ");
+        	scanf("%d", &clave);
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
         fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
 
         if (servicio.clave == 0)
         {
-            printf("Servicio no encontrado.\n");
+            printError("Servicio no encontrado.\n");
         }
         else
         {
@@ -808,8 +827,11 @@ void BorrarServicio(FILE *fptr)
             printf("Servicio eliminado correctamente.\n");
         }
 
-        printf("Deseas borrar otro servicio? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+        {
+        	printf("Deseas borrar otro servicio? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -819,18 +841,21 @@ void AgregarCita(FILE *fptr)
     int i = 0, encontrado = 0;
 
     rewind(fptr);
-
-    while (fread(&agenda, sizeof(struct DatosAgenda), 1, fptr) == 1 && i < 100)
+    
+	fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+    while (!feof(fptr) && i < 100)
     {
         if (agenda.claveAgenda == 0 && encontrado == 0)
             encontrado = 1;
         else
             i++;
+        fread(&agenda, sizeof(struct DatosAgenda), 1, fptr);
+
     }
 
     if (i >= 100)
     {
-        printf("Archivo lleno.\n");
+        printError("Archivo lleno.\n");
         return;
     }
 
@@ -838,33 +863,40 @@ void AgregarCita(FILE *fptr)
 
     printf("=== Nueva Cita ===\n");
 
-    printf("Clave del cliente: ");
-    scanf("%d", &agenda.claveCliente);
+	do
+	{
+		printf("Clave del cliente: ");
+    	scanf("%d", &agenda.claveCliente);
+	}while(validarClave(agenda.claveCliente));
 
-    printf("Clave del empleado: ");
-    scanf("%d", &agenda.claveEmpleado);
+    do
+    {
+    	printf("Clave del empleado: ");
+    	scanf("%d", &agenda.claveEmpleado);
+	}while(validarClave(agenda.claveEmpleado));
 
-    printf("Clave del servicio: ");
-    scanf("%d", &agenda.claveServicio);
+	do
+	{
+		printf("Clave del servicio: ");
+    	scanf("%d", &agenda.claveServicio);
+	}while(validarClave(agenda.claveServicio));
 
     do
     {
         printf("Fecha (dd/mm/aaaa): ");
         fflush(stdin);
         gets(agenda.fecha);
-        if (validarFecha(agenda.fecha))
-            printf("Error: Fecha no valida.\n");
     } while (validarFecha(agenda.fecha));
 
     printf("Hora (hh:mm): ");
+    fflush(stdin);
     gets(agenda.hora);
 
     do
     {
         printf("Estatus (PROGRAMADO, REALIZADO, CANCELADO): ");
+        fflush(stdin);
         gets(agenda.estatus);
-        if (validarEstatus(agenda.estatus))
-            printf("Error: Estatus no valido.\n");
     } while (validarEstatus(agenda.estatus));
 
     fseek(fptr, i * sizeof(struct DatosAgenda), SEEK_SET);
@@ -896,8 +928,11 @@ void ConsultarCita(FILE *fptr)
         switch (opcion)
         {
         case 1:
-            printf("Ingresa la clave de agenda: ");
-            scanf("%d", &clave);
+           	do
+           	{
+           		printf("Ingresa la clave de agenda: ");
+            	scanf("%d", &clave);
+			}while(validarClave(clave));
 
             fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
             fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
@@ -915,12 +950,15 @@ void ConsultarCita(FILE *fptr)
                 printf("--------------------------\n");
             }
             else
-                printf("Cita no encontrada.\n");
+                printError("Cita no encontrada.\n");
             break;
 
         case 2:
-            printf("Ingresa la clave del cliente: ");
-            scanf("%d", &clave);
+            do
+            {
+            	printf("Ingresa la clave del cliente: ");
+            	scanf("%d", &clave);
+			}while(validarClave(clave));
 
             printf("\n--- Citas del Cliente %d ---\n", clave);
 
@@ -975,7 +1013,7 @@ void ConsultarCita(FILE *fptr)
             }
 
             if (encontrados == 0)
-                printf("No se encontraron citas para ese servicio.\n");
+                printError("No se encontraron citas para ese servicio.\n");
             break;
 
         case 5:
@@ -994,14 +1032,17 @@ void ModificarCita(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave de agenda a modificar: ");
-        scanf("%d", &clave);
+        do
+        {
+        	printf("Ingresa la clave de agenda a modificar: ");
+        	scanf("%d", &clave);
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
         fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
 
         if (cita.claveAgenda == 0)
-            printf("Cita no encontrada.\n");
+            printError("Cita no encontrada.\n");
         else
         {
             printf("\nModificando cita #%d\n", cita.claveAgenda);
@@ -1010,9 +1051,8 @@ void ModificarCita(FILE *fptr)
             do
             {
                 printf("Nueva fecha (dd/mm/aaaa): ");
+                fflush(stdin);
                 gets(cita.fecha);
-                if (validarFecha(cita.fecha))
-                    printf("Error: Fecha no valida.\n");
             } while (validarFecha(cita.fecha));
             
             printf("Nueva hora (hh:mm): ");
@@ -1021,9 +1061,8 @@ void ModificarCita(FILE *fptr)
             do
             {
                 printf("Nuevo estatus: ");
+                fflush(stdin);
                 gets(cita.estatus);
-                if (validarEstatus(cita.estatus))
-                    printf("Error: Estatus no valido.\n");
             } while (validarEstatus(cita.estatus));
 
             fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
@@ -1033,8 +1072,11 @@ void ModificarCita(FILE *fptr)
             printf("Cita modificada correctamente.\n");
         }
 
-        printf("Deseas modificar otra cita? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+		{
+	        printf("Deseas modificar otra cita? (s/n): ");
+	        scanf(" %c", &continuar);	
+		}while(validarSN(continuar));
     }
 }
 
@@ -1046,14 +1088,17 @@ void BorrarCita(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave de agenda a borrar: ");
-        scanf("%d", &clave);
+        do
+        {
+        	printf("Ingresa la clave de agenda a borrar: ");
+        	scanf("%d", &clave);
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
         fread(&cita, sizeof(struct DatosAgenda), 1, fptr);
 
         if (cita.claveAgenda == 0)
-            printf("Cita no encontrada.\n");
+            printError("Cita no encontrada.\n");
         else
         {
             fseek(fptr, (clave - 1) * sizeof(struct DatosAgenda), SEEK_SET);
@@ -1062,8 +1107,11 @@ void BorrarCita(FILE *fptr)
             printf("Cita eliminada correctamente.\n");
         }
 
-        printf("Deseas borrar otra cita? (s/n): ");
-        scanf(" %c", &continuar);
+       	do
+       	{
+       		printf("Deseas borrar otra cita? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -1140,7 +1188,7 @@ void menuReportes(char opcionF)
 			
 			contador=1;
 			
-            while(!feof(agendaPtr))
+            while(!feof(agendaPtr) && contador <= 100)
             {
                 if(agenda.claveAgenda != 0 && strcmp(agenda.estatus, status) == 0)
                     imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
@@ -1197,7 +1245,7 @@ void menuReportes(char opcionF)
                 fflush(stdin);
                 gets(fechaVentaFin);
                 if(validarFecha(fechaVentaFin))
-                    printf("Error: Fecha no valida.\n");
+                    printError("Fecha no valida.\n");
             } while(validarFecha(fechaVentaFin));
             
             agendaPtr = fopen("agenda.dat", "r");
@@ -1225,7 +1273,7 @@ void menuReportes(char opcionF)
             printf("Generando archivo de clientes...\n");
             
             if((archivoCliente = fopen("archivoCliente.txt", "w")) == NULL || (clientePtr = fopen("clientes.dat", "r")) == NULL)
-                printf("Error al acceder a los archivos.\n");
+                printError("al acceder a los archivos.\n");
             else
             {
             	
@@ -1256,7 +1304,7 @@ void menuReportes(char opcionF)
             printf("Generando archivo de empleados...\n");
             
             if((archivoEmpleado = fopen("archivoEmpleado.txt", "w")) == NULL || (empleadoPtr = fopen("empleados.dat", "r")) == NULL)
-                printf("Error al acceder a los archivos.\n");
+                printError("al acceder a los archivos.\n");
             else
             {
             	fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
@@ -1284,8 +1332,11 @@ void menuReportes(char opcionF)
             printf("Opciones de archivos a visualizar:\n");
             printf("1. Cliente\n");
             printf("2. Empleado\n");
-            printf("Selecciona una opcion: ");
-            scanf("%d", &opcion);
+            do
+            {
+            	printf("Selecciona una opcion: ");
+            	scanf("%d", &opcion);
+			}while(opcion < 1 || opcion > 2);
             
             switch(opcion)
             {
@@ -1366,7 +1417,7 @@ void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServic
     if((clientePtr = fopen("clientes.dat", "r")) == NULL || 
        (empleadoPtr = fopen("empleados.dat", "r")) == NULL || 
        (servicioPtr = fopen("servicios.dat", "r")) == NULL)
-        printf("Error al abrir los archivos.\n");
+        printError("al abrir los archivos.\n");
     else
     {
         fseek(clientePtr, (*claveCliente - 1) * sizeof(struct DatosCliente), SEEK_SET);
@@ -1379,9 +1430,7 @@ void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServic
         fread(&servicio, sizeof(struct DatosServicio), 1, servicioPtr);
         
         if(cliente.clave != 0 && empleado.clave != 0 && servicio.clave != 0)
-        {
             printf("%-25s%-25s%-25s\n", cliente.nombre, empleado.nombre, servicio.descripcion);
-        }
         
         fclose(clientePtr);
         fclose(empleadoPtr);
@@ -1402,9 +1451,7 @@ void imprimirVenta(struct DatosAgenda *agenda)
         fread(&servicio, sizeof(struct DatosServicio), 1, servicioPtr);
 
         if(servicio.clave != 0)
-        {
             printf("%-25s%-15s$%-14.2f\n", servicio.descripcion, agenda->fecha, servicio.precio);
-        }
 
         fclose(servicioPtr);
     }
