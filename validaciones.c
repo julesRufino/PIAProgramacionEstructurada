@@ -27,6 +27,17 @@ bool validarSubmenu(char subopcion)
 	return validacion;
 }
 
+bool ValidarSubmenuReporte(char subopcion)
+{
+    subopcion = tolower(subopcion);
+    
+    if(subopcion != 'a' && subopcion != 'b' && subopcion != 'c' && subopcion != 'd' &&
+       subopcion != 'e' && subopcion != 'f' && subopcion != 'g' && subopcion != 'h')
+        return true;
+    else
+        return false;
+}
+
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda)
 {
     int i;

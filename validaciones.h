@@ -9,6 +9,7 @@ bool validarPuesto(char *puesto);
 bool fechaEnRango(char *fecha, char *inicio, char *fin);
 bool validarOpcionMenu(int opcion);
 bool validarSubmenu(char subopcion);
+bool ValidarSubmenuReporte(char subopcion);
 bool validarClave(int clave);
 bool validarEstatus(char *estatus);
 bool validarCadena(char *cadena);
