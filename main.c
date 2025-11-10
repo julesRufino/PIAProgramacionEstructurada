@@ -3,7 +3,7 @@
 #include "validaciones.h"
 #include "estructuras.h"
 
-int main()
+main()
 {
     FILE *fClientes;
     FILE *fEmpleados;
@@ -188,5 +188,4 @@ int main()
     fclose(fServicios);
     fclose(fAgenda);
 
-    return 0;
 }
