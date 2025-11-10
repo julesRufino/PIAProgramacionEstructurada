@@ -226,6 +226,7 @@ bool validarFecha(char *fecha)
     int dia, mes, anio;
     int dia_actual, mes_actual, anio_actual;
     int dias_por_mes[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int i; // CORREGIDO: Declarar fuera del for
     
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
@@ -239,7 +240,8 @@ bool validarFecha(char *fecha)
     if(fecha[2] != '/' || fecha[5] != '/')
         return true;
     
-    for(int i = 0; i < 10; i++)
+    // CORREGIDO: Declarar i fuera del for
+    for(i = 0; i < 10; i++)
     {
         if(i != 2 && i != 5 && !isdigit(fecha[i]))
             return true;
