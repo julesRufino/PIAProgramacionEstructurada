@@ -18,7 +18,7 @@ bool validarSN(char opcion)
 {
 	bool validacion = false;
 	
-	if(opcion != 'S' || opcion != 's' || opcion != 'n' || opcion != 'N')
+	if(opcion != 'S' && opcion != 's' && opcion != 'n' && opcion != 'N')
 	{
 		validacion = true;
 		printError("Error, ingrese opciones validas (s/n)\n");
