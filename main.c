@@ -20,7 +20,12 @@ int main()
         printf("Opcion: ");
         scanf("%d", &opcion);
         fflush(stdin);
-        //validarOpcionMenu(&opcion);
+
+        if (validarOpcionMenu(opcion))
+        {
+            printf("Error: Opcion fuera de rango (1-6).\n");
+            continue;
+        }
 
         switch (opcion)
         {
@@ -31,7 +36,12 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                //ValidarSubmenu(&subopcion);
+
+                if (validarSubmenu(subopcion))
+                {
+                    printf("Error: Opcion no valida.\n");
+                    continue;
+                }
 
                 switch (subopcion)
                 {
@@ -61,7 +71,12 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                //ValidarSubmenu(&subopcion);
+
+                if (validarSubmenu(subopcion))
+                {
+                    printf("Error: Opcion no valida.\n");
+                    continue;
+                }
 
                 switch (subopcion)
                 {
@@ -91,7 +106,12 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                //ValidarSubmenu(&subopcion);
+
+                if (validarSubmenu(subopcion))
+                {
+                    printf("Error: Opcion no valida.\n");
+                    continue;
+                }
 
                 switch (subopcion)
                 {
@@ -105,7 +125,7 @@ int main()
                     ModificarServicio(fServicios);
                     break;
                 case 'D':
-                    //BorrarServicio(fServicios);
+                    BorrarServicio(fServicios);
                     break;
                 case 'S':
                     printf("Saliendo del submenu SERVICIOS...\n");
@@ -121,21 +141,26 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                //ValidarSubmenu(&subopcion);
+
+                if (validarSubmenu(subopcion))
+                {
+                    printf("Error: Opcion no valida.\n");
+                    continue;
+                }
 
                 switch (subopcion)
                 {
                 case 'A':
-                    //AgregarCita(fAgenda);
+                    AgregarCita(fAgenda);
                     break;
                 case 'B':
-                    //ConsultarCita(fAgenda);
+                    ConsultarCita(fAgenda);
                     break;
                 case 'M':
-                    //ModificarCita(fAgenda);
+                    ModificarCita(fAgenda);
                     break;
                 case 'D':
-                   //BorrarCita(fAgenda);
+                    BorrarCita(fAgenda);
                     break;
                 case 'S':
                     printf("Saliendo del submenu AGENDA...\n");
@@ -151,7 +176,7 @@ int main()
                 printf("Opcion: ");
                 scanf(" %c", &subopcion);
                 fflush(stdin);
-                // ValidarSubmenuReporte(&subopcion);
+                
                 menuReportes(subopcion);
                 if (subopcion == 'h')
                     printf("Saliendo del submenu REPORTES...\n");
@@ -161,7 +186,6 @@ int main()
         case 6:
             printf("Saliendo del programa...\n");
             break;
-
         }
     }
 
@@ -169,4 +193,6 @@ int main()
     fclose(fEmpleados);
     fclose(fServicios);
     fclose(fAgenda);
+
+    return 0;
 }

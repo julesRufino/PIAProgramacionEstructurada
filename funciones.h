@@ -4,25 +4,22 @@
 #include <stdio.h>
 #include "estructuras.h"
 
-
 void imprimirMenu();
 void imprimirSubMenu(char *titulo);
 void imprimirMenuReportes();
-void menuReportes(char);
-void imprimirListaAgenda(int *, int *, int *);
-void imprimirVenta(struct DatosAgenda *);
+void menuReportes(char opcion);
+void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServicio);
+void imprimirVenta(struct DatosAgenda *agenda);
 
 void AgregarCliente(FILE *fptr);
 void ConsultarCliente(FILE *fptr);
 void ModificarCliente(FILE *fptr);
 void BorrarCliente(FILE *fptr);
 
-
 void AgregarEmpleado(FILE *fptr);
 void ConsultarEmpleado(FILE *fptr);
 void ModificarEmpleado(FILE *fptr);
 void BorrarEmpleado(FILE *fptr);
-
 
 void AgregarServicio(FILE *fptr);
 void ConsultarServicio(FILE *fptr);
