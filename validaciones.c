@@ -5,12 +5,25 @@
 #include "validaciones.h"
 #include "estructuras.h"
 
+void printError(const char *mensaje)
+{
+    printf("\033[1;31m");   
+    printf("ERROR: %s\n", mensaje);
+    printf("\033[0m");      
+    printf("\a");           
+    fflush(stdout);         
+}
+
+
 bool validarOpcionMenu(int opcion)
 {
 	bool validacion = false; 
 	
     if(opcion < 1 || opcion > 6)
+    {
         validacion = true;
+        printError("Opcion del menu fuera de rango (1-6).");
+    }
         
 	return validacion;
 }
@@ -22,7 +35,10 @@ bool validarSubmenu(char subopcion)
     subopcion = toupper(subopcion);
     
     if(subopcion != 'A' && subopcion != 'B' && subopcion != 'M' && subopcion != 'D' && subopcion != 'S')
+    {
         validacion = true;
+        printError("Subopcion invalida. Use A, B, M, D o S.");
+    }
 	
 	return validacion;
 }
@@ -34,7 +50,10 @@ bool ValidarSubmenuReporte(char subopcion)
     
     if(subopcion != 'a' && subopcion != 'b' && subopcion != 'c' && subopcion != 'd' &&
        subopcion != 'e' && subopcion != 'f' && subopcion != 'g' && subopcion != 'h')
+       {
         validacion = true;
+        printError("Subopcion invalida. Use a, b, c, d, e, f, g o h.");
+       }
 
     return validacion;
 }
@@ -121,7 +140,10 @@ bool validarPuesto(char *puestoF)
     if(strcmp(puestoUpper, "ESTILISTA") != 0 && strcmp(puestoUpper, "COLORISTA") != 0 && 
        strcmp(puestoUpper, "RECEPCIONISTA") != 0 && strcmp(puestoUpper, "COORDINADOR") != 0 && 
        strcmp(puestoUpper, "MAQUILLADOR") != 0)
+       {
         verificacion = true;
+        printError("Puesto invalido. Use ESTILISTA, COLORISTA, RECEPCIONISTA, COORDINADOR o MAQUILLADOR.");
+       }
 
     return verificacion;
 }
@@ -142,7 +164,10 @@ bool fechaEnRango(char *fecha, char *inicio, char *fin)
     long ff = af * 10000 + mf * 100 + df;
 
     if(f < fi || f > ff)
+    {
         verificacion = true;
+        printError("Fecha fuera de rango.");
+    }
         
     return verificacion;
 }
@@ -152,7 +177,10 @@ bool validarClave(int clave)
 	bool validacion = false;
 	
     if(clave < 1 || clave > 100)
+    {
         validacion = true;
+        printError("Clave fuera de rango (1-100).");
+    }
     
     return validacion;
 }
@@ -163,12 +191,18 @@ bool validarCadena(char *cadena)
     int i = 0;
     
     if(strlen(cadena) == 0)
+    {
         validacion = true;
+        printError("Cadena vacia.");
+    }
         
     while(cadena[i] != '\0')
     {
         if(!isalpha(cadena[i]) && !isspace(cadena[i]))
+        {
             validacion = true;
+            printError("Cadena contiene caracteres invalidos (solo letras y espacios).");
+        }
         i++;
     }
     
@@ -182,12 +216,18 @@ bool validarTelefono(char *telefono)
     int i = 0;
     
     if(strlen(telefono) != 10)
+    {
         validacion = true;
+        printError("Telefono debe tener 10 digitos.");
+    }
         
     while(telefono[i] != '\0')
     {
         if(!isdigit(telefono[i]))
+        {
             validacion = true;
+            printError("Telefono contiene caracteres invalidos");
+        }
         i++;
     }
     
@@ -221,7 +261,9 @@ bool validarCorreo(char *correo)
     
     if(cantidad_arrobas != 1 || correo[longitud_cadena-1] == '.' || !punto_despues_arroba)
         validacion = true;
-    
+        
+    if (validacion)
+        printError("Correo electronico no valido.");
     return validacion;
 }
 
@@ -231,12 +273,18 @@ bool validarNumero(char *numero)
     int i = 0;
     
     if(strlen(numero) == 0)
+    {
         validacion = true;
+        printError("Numero vacio.");
+    }
         
     while(numero[i] != '\0')
     {
         if(!isdigit(numero[i]))
+        {
             validacion = true;
+            printError("Numero contiene caracteres invalidos (solo digitos).");
+        }
         i++;
     }
     
@@ -300,7 +348,8 @@ bool validarFecha(char *fecha)
         else if(mes == mes_actual && dia > dia_actual)
             validacion = true;
     }
-    
+    if(validacion)
+        printError("Fecha no valida.");
     return validacion;
 }
 
@@ -309,7 +358,10 @@ bool validarPrecio(float precio)
 	bool validacion = false;
 	 
     if(precio <= 0)
+    {
         validacion = true;
+        printError("Precio debe ser mayor que cero.");
+    }
         
     return validacion;
 }
@@ -330,7 +382,10 @@ bool validarEstatus(char *estatus)
     
     if(strcmp(estatusUpper, "PROGRAMADO") != 0 && strcmp(estatusUpper, "REALIZADO") != 0 && 
        strcmp(estatusUpper, "CANCELADO") != 0)
+       {
         validacion = true;
+        printError("Estatus invalido. Use PROGRAMADO, REALIZADO o CANCELADO.");
+       }
         
     return validacion;
 }
