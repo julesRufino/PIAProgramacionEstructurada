@@ -18,5 +18,6 @@ bool validarCorreo(char *correo);
 bool validarNumero(char *numero);
 bool validarFecha(char *fecha);
 bool validarPrecio(float precio);
+void printError(const char *mensaje);
 
 #endif
