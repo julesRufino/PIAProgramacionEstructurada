@@ -16,32 +16,28 @@ int main()
 
     while (opcion != 6)
     {
-        imprimirMenu();
-        printf("Opcion: ");
-        scanf("%d", &opcion);
-        fflush(stdin);
-
-        if (validarOpcionMenu(opcion))
+        
+        do
         {
-            printf("Error: Opcion fuera de rango (1-6).\n");
-            continue;
-        }
+            imprimirMenu();
+            printf("Opcion: ");
+            fflush(stdin);
+            scanf("%d", &opcion);
+        }while(!validarOpcionMenu(opcion));
 
         switch (opcion)
         {
         case 1:
             do
             {
-                imprimirSubMenu("CLIENTES");
-                printf("Opcion: ");
-                scanf(" %c", &subopcion);
-                fflush(stdin);
-
-                if (validarSubmenu(subopcion))
+                do
                 {
-                    printf("Error: Opcion no valida.\n");
-                    continue;
-                }
+                    imprimirSubMenu("CLIENTES");
+                    printf("Opcion: ");
+                    fflush(stdin);
+                    scanf(" %c", &subopcion);
+                }while(!validarSubmenu(subopcion));
+               
 
                 switch (subopcion)
                 {
@@ -67,16 +63,13 @@ int main()
         case 2:
             do
             {
-                imprimirSubMenu("EMPLEADOS");
-                printf("Opcion: ");
-                scanf(" %c", &subopcion);
-                fflush(stdin);
-
-                if (validarSubmenu(subopcion))
+                do
                 {
-                    printf("Error: Opcion no valida.\n");
-                    continue;
-                }
+                    imprimirSubMenu("EMPLEADOS");
+                    printf("Opcion: ");
+                    fflush(stdin);
+                    scanf(" %c", &subopcion);
+                }while(!validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
@@ -102,16 +95,13 @@ int main()
         case 3:
             do
             {
-                imprimirSubMenu("SERVICIOS");
-                printf("Opcion: ");
-                scanf(" %c", &subopcion);
-                fflush(stdin);
-
-                if (validarSubmenu(subopcion))
+                do
                 {
-                    printf("Error: Opcion no valida.\n");
-                    continue;
-                }
+                    imprimirSubMenu("SERVICIOS");
+                    printf("Opcion: ");
+                    fflush(stdin);
+                    scanf(" %c", &subopcion);
+                }while(!validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
@@ -126,6 +116,7 @@ int main()
                     break;
                 case 'D':
                     BorrarServicio(fServicios);
+                    BorrarServicio(fServicios);
                     break;
                 case 'S':
                     printf("Saliendo del submenu SERVICIOS...\n");
@@ -137,30 +128,30 @@ int main()
         case 4:
             do
             {
-                imprimirSubMenu("AGENDA");
-                printf("Opcion: ");
-                scanf(" %c", &subopcion);
-                fflush(stdin);
-
-                if (validarSubmenu(subopcion))
+                do
                 {
-                    printf("Error: Opcion no valida.\n");
-                    continue;
-                }
+                    imprimirSubMenu("AGENDA");
+                    printf("Opcion: ");
+                    fflush(stdin);
+                    scanf(" %c", &subopcion);
+                }while(!validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
                 case 'A':
                     AgregarCita(fAgenda);
+                    AgregarCita(fAgenda);
                     break;
                 case 'B':
+                    ConsultarCita(fAgenda);
                     ConsultarCita(fAgenda);
                     break;
                 case 'M':
                     ModificarCita(fAgenda);
+                    ModificarCita(fAgenda);
                     break;
                 case 'D':
-                    BorrarCita(fAgenda);
+                   BorrarCita(fAgenda);
                     break;
                 case 'S':
                     printf("Saliendo del submenu AGENDA...\n");
@@ -172,10 +163,13 @@ int main()
         case 5:
             do
             {
-                imprimirMenuReportes();
-                printf("Opcion: ");
-                scanf(" %c", &subopcion);
-                fflush(stdin);
+                do
+                {
+                    imprimirMenuReportes();
+                    printf("Opcion: ");
+                    fflush(stdin);
+                    scanf(" %c", &subopcion);
+                }while(!ValidarSubmenuReporte(subopcion));
                 
                 menuReportes(subopcion);
                 if (subopcion == 'h')

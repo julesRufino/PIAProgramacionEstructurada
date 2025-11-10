@@ -23,6 +23,17 @@ bool validarSubmenu(char subopcion)
         return false;
 }
 
+bool ValidarSubmenuReporte(char subopcion)
+{
+    subopcion = tolower(subopcion);
+    
+    if(subopcion != 'a' && subopcion != 'b' && subopcion != 'c' && subopcion != 'd' &&
+       subopcion != 'e' && subopcion != 'f' && subopcion != 'g' && subopcion != 'h')
+        return true;
+    else
+        return false;
+}
+
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda)
 {
     int i;
@@ -92,7 +103,6 @@ bool validarPuesto(char *puestoF)
 {
     bool verificacion = false;
 
-    // Convertir a mayúsculas para validación
     int i = 0;
     char puestoUpper[20];
     strcpy(puestoUpper, puestoF);
