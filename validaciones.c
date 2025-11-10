@@ -7,20 +7,24 @@
 
 bool validarOpcionMenu(int opcion)
 {
+	bool validacion = false; 
+	
     if(opcion < 1 || opcion > 6)
-        return true;
-    else
-        return false;
+        validacion = true;
+        
+	return validacion;
 }
 
 bool validarSubmenu(char subopcion)
 {
+	bool validacion = false;
+	
     subopcion = toupper(subopcion);
     
     if(subopcion != 'A' && subopcion != 'B' && subopcion != 'M' && subopcion != 'D' && subopcion != 'S')
-        return true;
-    else
-        return false;
+        validacion = true;
+	
+	return validacion;
 }
 
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda)
@@ -92,7 +96,6 @@ bool validarPuesto(char *puestoF)
 {
     bool verificacion = false;
 
-    // Convertir a mayúsculas para validación
     int i = 0;
     char puestoUpper[20];
     strcpy(puestoUpper, puestoF);
@@ -134,48 +137,54 @@ bool fechaEnRango(char *fecha, char *inicio, char *fin)
 
 bool validarClave(int clave)
 {
+	bool validacion = false;
+	
     if(clave < 1 || clave > 100)
-        return true;
-    else
-        return false;
+        validacion = true;
+    
+    return validacion;
 }
 
 bool validarCadena(char *cadena)
 {
+	bool validacion = false;
     int i = 0;
     
     if(strlen(cadena) == 0)
-        return true;
+        validacion = true;
         
     while(cadena[i] != '\0')
     {
         if(!isalpha(cadena[i]) && !isspace(cadena[i]))
-            return true;
+            validacion = true;
         i++;
     }
     
-    return false;
+    return validacion;
 }
 
 bool validarTelefono(char *telefono)
 {
+	bool validacion = false;
+	
     int i = 0;
     
     if(strlen(telefono) != 10)
-        return true;
+        validacion = true;
         
     while(telefono[i] != '\0')
     {
         if(!isdigit(telefono[i]))
-            return true;
+            validacion = true;
         i++;
     }
     
-    return false;
+    return validacion;
 }
 
 bool validarCorreo(char *correo)
 {
+	bool validacion = false;
     int i, cantidad_arrobas = 0;
     int longitud_cadena;
     bool punto_despues_arroba = false;
@@ -183,13 +192,13 @@ bool validarCorreo(char *correo)
     longitud_cadena = strlen(correo);
     
     if(longitud_cadena < 5)
-        return true;
+        validacion = true;
         
     for(i = 0; correo[i] != '\0'; i++)
     {
         if(!isalpha(correo[i]) && !isdigit(correo[i]) &&
            correo[i] != '.' && correo[i] != '-' && correo[i] != '_' && correo[i] != '@')
-            return true;
+            validacion = true;
         
         if(correo[i] == '@')
             cantidad_arrobas++;
@@ -199,34 +208,36 @@ bool validarCorreo(char *correo)
     }
     
     if(cantidad_arrobas != 1 || correo[longitud_cadena-1] == '.' || !punto_despues_arroba)
-        return true;
+        validacion = true;
     
-    return false;
+    return validacion;
 }
 
 bool validarNumero(char *numero)
 {
+	bool validacion = false;
     int i = 0;
     
     if(strlen(numero) == 0)
-        return true;
+        validacion = true;
         
     while(numero[i] != '\0')
     {
         if(!isdigit(numero[i]))
-            return true;
+            validacion = true;
         i++;
     }
     
-    return false;
+    return validacion;
 }
 
 bool validarFecha(char *fecha)
 {
+	bool validacion = false;
     int dia, mes, anio;
     int dia_actual, mes_actual, anio_actual;
     int dias_por_mes[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-    int i; // CORREGIDO: Declarar fuera del for
+    int i;
     
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
@@ -235,16 +246,15 @@ bool validarFecha(char *fecha)
     anio_actual = tm_info->tm_year + 1900;
     
     if(strlen(fecha) != 10)
-        return true;
+        validacion = true;
     
     if(fecha[2] != '/' || fecha[5] != '/')
-        return true;
+        validacion = true;
     
-    // CORREGIDO: Declarar i fuera del for
     for(i = 0; i < 10; i++)
     {
         if(i != 2 && i != 5 && !isdigit(fecha[i]))
-            return true;
+            validacion = true;
     }
     
     dia = (fecha[0] - '0') * 10 + (fecha[1] - '0');
@@ -253,10 +263,10 @@ bool validarFecha(char *fecha)
            (fecha[8] - '0') * 10 + (fecha[9] - '0');
     
     if(anio < 1900 || anio > anio_actual)
-        return true;
+        validacion = true;
     
     if(mes < 1 || mes > 12)
-        return true;
+        validacion = true;
 
     if(mes == 2)
     {
@@ -267,31 +277,35 @@ bool validarFecha(char *fecha)
     }
     
     if(dia < 1 || dia > dias_por_mes[mes-1])
-        return true;
+        validacion = true;
       
     if(anio > anio_actual)
-        return true;
+        validacion = true;
     else if(anio == anio_actual)
     {
         if(mes > mes_actual)
-            return true;
+            validacion = true;
         else if(mes == mes_actual && dia > dia_actual)
-            return true;
+            validacion = true;
     }
     
-    return false;
+    return validacion;
 }
 
 bool validarPrecio(float precio)
 {
+	bool validacion = false;
+	 
     if(precio <= 0)
-        return true;
-    else
-        return false;
+        validacion = true;
+        
+    return validacion;
 }
 
 bool validarEstatus(char *estatus)
 {
+	bool validacion = false;
+	
     char estatusUpper[20];
     strcpy(estatusUpper, estatus);
     int i = 0;
@@ -304,7 +318,7 @@ bool validarEstatus(char *estatus)
     
     if(strcmp(estatusUpper, "PROGRAMADO") != 0 && strcmp(estatusUpper, "REALIZADO") != 0 && 
        strcmp(estatusUpper, "CANCELADO") != 0)
-        return true;
-    else
-        return false;
+        validacion = true;
+        
+    return validacion;
 }
