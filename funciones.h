@@ -4,31 +4,32 @@
 #include <stdio.h>
 #include "estructuras.h"
 
+void mostrarError(char *);
 void imprimirMenu();
-void imprimirSubMenu(char *titulo);
+void imprimirSubMenu(char *);
 void imprimirMenuReportes();
 void menuReportes(char opcion);
-void imprimirListaAgenda(int *claveCliente, int *claveEmpleado, int *claveServicio);
-void imprimirVenta(struct DatosAgenda *agenda);
+void imprimirListaAgenda(int *, int *, int *);
+void imprimirVenta(struct DatosAgenda *);
 
-void AgregarCliente(FILE *fptr);
-void ConsultarCliente(FILE *fptr);
-void ModificarCliente(FILE *fptr);
-void BorrarCliente(FILE *fptr);
+void AgregarCliente(FILE *);
+void ConsultarCliente(FILE *);
+void ModificarCliente(FILE *);
+void BorrarCliente(FILE *);
 
-void AgregarEmpleado(FILE *fptr);
-void ConsultarEmpleado(FILE *fptr);
-void ModificarEmpleado(FILE *fptr);
-void BorrarEmpleado(FILE *fptr);
+void AgregarEmpleado(FILE *);
+void ConsultarEmpleado(FILE *);
+void ModificarEmpleado(FILE *);
+void BorrarEmpleado(FILE *);
 
-void AgregarServicio(FILE *fptr);
-void ConsultarServicio(FILE *fptr);
-void ModificarServicio(FILE *fptr);
-void BorrarServicio(FILE *fptr);
+void AgregarServicio(FILE *);
+void ConsultarServicio(FILE *);
+void ModificarServicio(FILE *);
+void BorrarServicio(FILE *);
 
-void AgregarCita(FILE *fptr);
-void ConsultarCita(FILE *fptr);
-void ModificarCita(FILE *fptr);
-void BorrarCita(FILE *fptr);
+void AgregarCita(FILE *);
+void ConsultarCita(FILE *);
+void ModificarCita(FILE *);
+void BorrarCita(FILE *);
 
 #endif

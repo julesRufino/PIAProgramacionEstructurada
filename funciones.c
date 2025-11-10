@@ -5,6 +5,15 @@
 #include "validaciones.h"
 #include <stdbool.h>
 
+
+void mostrarError(char *mensaje)
+{
+    printf("\033[0;31m");
+    printf("%s\n", mensaje);
+    printf("\a");
+    printf("\033[0m");
+}
+
 void imprimirMenu()
 {
     printf("\n");
@@ -1269,15 +1278,22 @@ void menuReportes(char opcionF)
                         printf("\n%-10s%-20s%-15s%-20s%-30s%-30s\n",
                                "Clave", "Nombre", "Nacimiento", "Telefono", "Correo", "Direccion");
                         printf("---------------------------------------------------------------------------------------------------------------\n");
-
-                        while(fscanf(archivoCliente, "%d %s %s %s %s %s %s %s %s %s",
+                        
+						fscanf(archivoCliente, "%d %s %s %s %s %s %s %s %s %s",
                                &cliente.clave, cliente.nombre, cliente.fechaNacimiento,
                                cliente.telefono, cliente.correoElectronico, cliente.calle,
-                               cliente.numero, cliente.colonia, cliente.municipio, cliente.estado) != EOF)
+                               cliente.numero, cliente.colonia, cliente.municipio, cliente.estado);
+                        
+                        while(!feof(archivoCliente))
                         {
                             printf("%-10d%-20s%-15s%-20s%-30s%-30s\n",
                                    cliente.clave, cliente.nombre, cliente.fechaNacimiento,
                                    cliente.telefono, cliente.correoElectronico, cliente.calle);
+                                   
+	                        fscanf(archivoCliente, "%d %s %s %s %s %s %s %s %s %s",
+	                               &cliente.clave, cliente.nombre, cliente.fechaNacimiento,
+	                               cliente.telefono, cliente.correoElectronico, cliente.calle,
+	                               cliente.numero, cliente.colonia, cliente.municipio, cliente.estado);
                         }
                         fclose(archivoCliente);
                     }
@@ -1291,15 +1307,21 @@ void menuReportes(char opcionF)
                         printf("\n%-10s%-20s%-15s%-20s%-20s%-30s\n",
                                "Clave", "Nombre", "Puesto", "Contratacion", "Telefono", "Correo");
                         printf("----------------------------------------------------------------------------------------------------\n");
-
-                        while(fscanf(archivoEmpleado, "%d %s %s %s %s %s %s %s %s %s %s",
+                        
+						fscanf(archivoEmpleado, "%d %s %s %s %s %s %s %s %s %s %s",
                                &empleado.clave, empleado.nombre, empleado.puesto,
                                empleado.fechaContratacion, empleado.telefono, empleado.correoElectronico,
-                               empleado.calle, empleado.numero, empleado.colonia, empleado.municipio, empleado.estado) != EOF)
+                               empleado.calle, empleado.numero, empleado.colonia, empleado.municipio, empleado.estado);
+                               
+                        while(!feof(archivoEmpleado))
                         {
                             printf("%-10d%-20s%-15s%-20s%-20s%-30s\n",
                                    empleado.clave, empleado.nombre, empleado.puesto,
                                    empleado.fechaContratacion, empleado.telefono, empleado.correoElectronico);
+                            fscanf(archivoEmpleado, "%d %s %s %s %s %s %s %s %s %s %s",
+                               &empleado.clave, empleado.nombre, empleado.puesto,
+                               empleado.fechaContratacion, empleado.telefono, empleado.correoElectronico,
+                               empleado.calle, empleado.numero, empleado.colonia, empleado.municipio, empleado.estado);
                         }
                         fclose(archivoEmpleado);
                     }
@@ -1313,10 +1335,6 @@ void menuReportes(char opcionF)
             
         case 'h':
             printf("Saliendo de reportes...\n");
-            break;
-            
-        default:
-            printf("Opcion no valida.\n");
             break;
     }
 }
