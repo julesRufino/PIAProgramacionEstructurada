@@ -116,7 +116,6 @@ main()
                     break;
                 case 'D':
                     BorrarServicio(fServicios);
-                    BorrarServicio(fServicios);
                     break;
                 case 'S':
                     printf("Saliendo del submenu SERVICIOS...\n");
@@ -140,14 +139,11 @@ main()
                 {
                 case 'A':
                     AgregarCita(fAgenda);
-                    AgregarCita(fAgenda);
                     break;
                 case 'B':
                     ConsultarCita(fAgenda);
-                    ConsultarCita(fAgenda);
                     break;
                 case 'M':
-                    ModificarCita(fAgenda);
                     ModificarCita(fAgenda);
                     break;
                 case 'D':
