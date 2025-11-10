@@ -29,13 +29,14 @@ bool validarSubmenu(char subopcion)
 
 bool ValidarSubmenuReporte(char subopcion)
 {
+	bool validacion = false;
     subopcion = tolower(subopcion);
     
     if(subopcion != 'a' && subopcion != 'b' && subopcion != 'c' && subopcion != 'd' &&
        subopcion != 'e' && subopcion != 'f' && subopcion != 'g' && subopcion != 'h')
-        return true;
-    else
-        return false;
+        validacion = true;
+
+    return validacion;
 }
 
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda)

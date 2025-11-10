@@ -23,7 +23,7 @@ int main()
             printf("Opcion: ");
             fflush(stdin);
             scanf("%d", &opcion);
-        }while(!validarOpcionMenu(opcion));
+        }while(validarOpcionMenu(opcion));
 
         switch (opcion)
         {
@@ -36,7 +36,7 @@ int main()
                     printf("Opcion: ");
                     fflush(stdin);
                     scanf(" %c", &subopcion);
-                }while(!validarSubmenu(subopcion));
+                }while(validarSubmenu(subopcion));
                
 
                 switch (subopcion)
@@ -69,7 +69,7 @@ int main()
                     printf("Opcion: ");
                     fflush(stdin);
                     scanf(" %c", &subopcion);
-                }while(!validarSubmenu(subopcion));
+                }while(validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
@@ -101,7 +101,7 @@ int main()
                     printf("Opcion: ");
                     fflush(stdin);
                     scanf(" %c", &subopcion);
-                }while(!validarSubmenu(subopcion));
+                }while(validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
@@ -134,7 +134,7 @@ int main()
                     printf("Opcion: ");
                     fflush(stdin);
                     scanf(" %c", &subopcion);
-                }while(!validarSubmenu(subopcion));
+                }while(validarSubmenu(subopcion));
 
                 switch (subopcion)
                 {
@@ -169,7 +169,7 @@ int main()
                     printf("Opcion: ");
                     fflush(stdin);
                     scanf(" %c", &subopcion);
-                }while(!ValidarSubmenuReporte(subopcion));
+                }while(ValidarSubmenuReporte(subopcion));
                 
                 menuReportes(subopcion);
                 if (subopcion == 'h')
