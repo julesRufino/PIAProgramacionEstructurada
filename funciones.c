@@ -619,7 +619,9 @@ void AgregarServicio(FILE *fptr)
             do
             {
                 printf("Descripcion del servicio: ");
+                fflush(stdin);
                 gets(servicio.descripcion);
+                
                 if (validarCadena(servicio.descripcion))
                     printError("Descripcion no valida.\n");
             } while (validarCadena(servicio.descripcion));
@@ -674,16 +676,19 @@ void ConsultarServicio(FILE *fptr)
         switch (opcion)
         {
         case 1:
-            printf("Ingresa la clave del servicio a consultar: ");
-            scanf("%d", &clave);
-            fflush(stdin);
+       		do
+       		{
+       			printf("Ingresa la clave del servicio a consultar: ");
+            	scanf("%d", &clave);
+            	fflush(stdin);
+			}while(validarClave(clave));
 
             fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
             fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
 
             if (servicio.clave == 0)
             {
-                printf("Servicio no encontrado.\n");
+                printError("Servicio no encontrado.\n");
             }
             else
             {
@@ -698,11 +703,12 @@ void ConsultarServicio(FILE *fptr)
 
         case 2:
             printf("Ingresa parte de la descripcion del servicio a buscar: ");
-            fgets(descripcionBuscada, sizeof(descripcionBuscada), stdin);
-            descripcionBuscada[strcspn(descripcionBuscada, "\n")] = 0;
+            fflush(stdin);
+            gets(descripcionBuscada);
 
             rewind(fptr);
-
+            
+			contador = 1;
             while (!feof(fptr) && contador <= 100)
             {
                 fread(&servicio, sizeof(struct DatosServicio), 1, fptr);
