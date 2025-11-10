@@ -160,6 +160,7 @@ void AgregarCliente(FILE *fptr)
         }
 
         printf("Deseas agregar otro cliente? (s/n): ");
+        fflush(stdin);
         scanf(" %c", &continuar);
     }
 }
