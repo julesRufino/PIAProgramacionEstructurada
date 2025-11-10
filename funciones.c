@@ -5,15 +5,6 @@
 #include "validaciones.h"
 #include <stdbool.h>
 
-
-void mostrarError(char *mensaje)
-{
-    printf("\033[0;31m");
-    printf("%s\n", mensaje);
-    printf("\a");
-    printf("\033[0m");
-}
-
 void imprimirMenu()
 {
     printf("\n");
@@ -72,8 +63,6 @@ void AgregarCliente(FILE *fptr)
         {
             printf("Ingresa la clave del cliente (1-100): ");
             scanf("%d", &clave);
-            if (validarClave(clave))
-                printf("Error: Clave fuera de rango (1-100).\n");
         } while (validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
@@ -81,7 +70,7 @@ void AgregarCliente(FILE *fptr)
 
         if (cliente.clave != 0)
         {
-            printf("Error: Esa clave ya existe.\n");
+            printError("Esa clave ya existe.\n");
         }
         else
         {
@@ -91,72 +80,54 @@ void AgregarCliente(FILE *fptr)
             {
                 printf("Nombre del cliente: ");
                 gets(cliente.nombre);
-                if (validarCadena(cliente.nombre))
-                    printf("Error: Nombre no valido (solo letras y espacios).\n");
             } while (validarCadena(cliente.nombre));
             
             do
             {
                 printf("Fecha de nacimiento (dd/mm/aaaa): ");
                 gets(cliente.fechaNacimiento);
-                if (validarFecha(cliente.fechaNacimiento))
-                    printf("Error: Fecha no valida.\n");
             } while (validarFecha(cliente.fechaNacimiento));
 
             do
             {
                 printf("Telefono: ");
                 gets(cliente.telefono);
-                if (validarTelefono(cliente.telefono))
-                    printf("Error: Telefono no valido (10 digitos).\n");
             } while (validarTelefono(cliente.telefono));
 
             do
             {
                 printf("Correo electronico: ");
                 gets(cliente.correoElectronico);
-                if (validarCorreo(cliente.correoElectronico))
-                    printf("Error: Correo no valido.\n");
             } while (validarCorreo(cliente.correoElectronico));
 
             do
             {
                 printf("Calle: ");
                 gets(cliente.calle);
-                if (validarCadena(cliente.calle))
-                    printf("Error: Calle no valida.\n");
             } while (validarCadena(cliente.calle));
 
             do
             {
                 printf("Numero: ");
                 gets(cliente.numero);
-                if (validarNumero(cliente.numero))
-                    printf("Error: Numero no valido.\n");
             } while (validarNumero(cliente.numero));
 
             do
             {
                 printf("Colonia: ");
                 gets(cliente.colonia);
-                if (validarCadena(cliente.colonia))
-                    printf("Error: Colonia no valida.\n");
             } while (validarCadena(cliente.colonia));
 
             do
             {
                 printf("Municipio: ");
                 gets(cliente.municipio);
-                if (validarCadena(cliente.municipio))
-                    printf("Error: Municipio no valido.\n");
             } while (validarCadena(cliente.municipio));
 
             do
             {
                 printf("Estado: ");
                 gets(cliente.estado);
-                if (validarCadena(cliente.estado))
-                    printf("Error: Estado no valido.\n");
             } while (validarCadena(cliente.estado));
 
             cliente.clave = clave;
@@ -168,9 +139,11 @@ void AgregarCliente(FILE *fptr)
             printf("Cliente agregado correctamente.\n");
         }
 
-        printf("Deseas agregar otro cliente? (s/n): ");
-        fflush(stdin);
-        scanf(" %c", &continuar);
+		do{
+			printf("Deseas agregar otro cliente? (s/n): ");
+	        fflush(stdin);
+	        scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -186,23 +159,27 @@ void ConsultarCliente(FILE *fptr)
         printf("1. Buscar por clave\n");
         printf("2. Buscar por nombre\n");
         printf("3. Salir\n");
-        printf("Selecciona una opcion: ");
-        scanf("%d", &opcion);
-        fflush(stdin);
+		do{
+			printf("Selecciona una opcion: ");
+	        scanf("%d", &opcion);
+	        fflush(stdin);
+		}while(validarOpcion3(opcion));
 
         switch (opcion)
         {
         case 1:
-            printf("Ingresa la clave del cliente a consultar: ");
-            scanf("%d", &clave);
-            fflush(stdin);
+	        do
+	        {
+	            printf("Ingresa la clave del cliente a consultar: ");
+	            scanf("%d", &clave);
+	        } while (validarClave(clave));
 
             fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
             fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
 
             if (cliente.clave == 0)
             {
-                printf("Cliente no encontrado.\n");
+                printError("Cliente no encontrado.\n");
             }
             else
             {
@@ -219,8 +196,8 @@ void ConsultarCliente(FILE *fptr)
 
         case 2:
             printf("Ingresa parte del nombre del cliente a buscar: ");
-            fgets(nombreBuscado, sizeof(nombreBuscado), stdin);
-            nombreBuscado[strcspn(nombreBuscado, "\n")] = 0;
+            fflush(stdin);
+            gets(nombreBuscado);
 
             rewind(fptr);
 
@@ -245,7 +222,7 @@ void ConsultarCliente(FILE *fptr)
 
             if (encontrados == 0)
             {
-                printf("No se encontraron coincidencias.\n");
+                printError("No se encontraron coincidencias.\n");
             }
             break;
 
@@ -318,9 +295,11 @@ void ModificarCliente(FILE *fptr)
 
             printf("Cliente modificado correctamente.\n");
         }
-
-        printf("Deseas modificar otro cliente? (s/n): ");
-        scanf(" %c", &continuar);
+		do
+		{
+			printf("Deseas modificar otro cliente? (s/n): ");
+	        scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -332,8 +311,11 @@ void BorrarCliente(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave del cliente a borrar: ");
-        scanf("%d", &clave);
+        do
+		{
+	        printf("Ingresa la clave del cliente a borrar: ");
+	        scanf("%d", &clave);	
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosCliente), SEEK_SET);
         fread(&cliente, sizeof(struct DatosCliente), 1, fptr);
@@ -350,8 +332,11 @@ void BorrarCliente(FILE *fptr)
             printf("Cliente eliminado correctamente.\n");
         }
 
-        printf("Deseas borrar otro cliente? (s/n): ");
-        scanf(" %c", &continuar);
+		do
+		{
+			printf("Deseas borrar otro cliente? (s/n): ");
+	        scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -363,20 +348,17 @@ void AgregarEmpleado(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        do
-        {
             printf("Ingresa la clave del empleado (1-100): ");
             scanf("%d", &clave);
             if (validarClave(clave))
-                printf("Error: Clave fuera de rango (1-100).\n");
-        } while (validarClave(clave));
+                printError("Clave fuera de rango (1-100).\n");
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
         fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
 
         if (empleado.clave != 0)
         {
-            printf("Error: Esa clave ya existe.\n");
+            printError("Esa clave ya existe.\n");
         }
         else
         {
@@ -431,8 +413,11 @@ void AgregarEmpleado(FILE *fptr)
             printf("Empleado agregado correctamente.\n");
         }
 
-        printf("Deseas agregar otro empleado? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+        {
+        	printf("Deseas agregar otro empleado? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -448,9 +433,11 @@ void ConsultarEmpleado(FILE *fptr)
         printf("1. Buscar por clave\n");
         printf("2. Buscar por nombre\n");
         printf("3. Salir\n");
-        printf("Selecciona una opcion: ");
-        scanf("%d", &opcion);
-        fflush(stdin);
+		do{
+			printf("Selecciona una opcion: ");
+	        scanf("%d", &opcion);
+	        fflush(stdin);
+		}while(validarOpcion3(opcion));
 
         switch (opcion)
         {
@@ -464,7 +451,7 @@ void ConsultarEmpleado(FILE *fptr)
 
             if (empleado.clave == 0)
             {
-                printf("Empleado no encontrado.\n");
+                printError("Empleado no encontrado.\n");
             }
             else
             {
@@ -481,11 +468,11 @@ void ConsultarEmpleado(FILE *fptr)
 
         case 2:
             printf("Ingresa parte del nombre del empleado a buscar: ");
-            fgets(nombreBuscado, sizeof(nombreBuscado), stdin);
-            nombreBuscado[strcspn(nombreBuscado, "\n")] = 0;
+            fflush(stdin);
+            gets(nombreBuscado);
 
             rewind(fptr);
-
+			contador = 1;
             while (!feof(fptr) && contador <= 100)
             {
                 fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
@@ -534,7 +521,7 @@ void ModificarEmpleado(FILE *fptr)
 
         if (empleado.clave == 0)
         {
-            printf("Empleado no encontrado.\n");
+            printError("Empleado no encontrado.\n");
         }
         else
         {
@@ -559,8 +546,11 @@ void ModificarEmpleado(FILE *fptr)
             printf("Empleado modificado correctamente.\n");
         }
 
-        printf("Deseas modificar otro empleado? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+        {
+        	printf("Deseas modificar otro empleado? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -572,15 +562,18 @@ void BorrarEmpleado(FILE *fptr)
 
     while (continuar != 'n' && continuar != 'N')
     {
-        printf("Ingresa la clave del empleado a borrar: ");
-        scanf("%d", &clave);
+        do
+        {
+        	printf("Ingresa la clave del empleado a borrar: ");
+        	scanf("%d", &clave);
+		}while(validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosEmpleado), SEEK_SET);
         fread(&empleado, sizeof(struct DatosEmpleado), 1, fptr);
 
         if (empleado.clave == 0)
         {
-            printf("Empleado no encontrado.\n");
+            printError("Empleado no encontrado.\n");
         }
         else
         {
@@ -590,8 +583,11 @@ void BorrarEmpleado(FILE *fptr)
             printf("Empleado eliminado correctamente.\n");
         }
 
-        printf("Deseas borrar otro empleado? (s/n): ");
-        scanf(" %c", &continuar);
+        do
+        {
+        	printf("Deseas borrar otro empleado? (s/n): ");
+        	scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -607,8 +603,6 @@ void AgregarServicio(FILE *fptr)
         {
             printf("Ingresa la clave del servicio (1-100): ");
             scanf("%d", &clave);
-            if (validarClave(clave))
-                printf("Error: Clave fuera de rango (1-100).\n");
         } while (validarClave(clave));
 
         fseek(fptr, (clave - 1) * sizeof(struct DatosServicio), SEEK_SET);
@@ -616,7 +610,7 @@ void AgregarServicio(FILE *fptr)
 
         if (servicio.clave != 0)
         {
-            printf("Error: Esa clave ya existe.\n");
+            printError("Esa clave ya existe.\n");
         }
         else
         {
@@ -627,15 +621,13 @@ void AgregarServicio(FILE *fptr)
                 printf("Descripcion del servicio: ");
                 gets(servicio.descripcion);
                 if (validarCadena(servicio.descripcion))
-                    printf("Error: Descripcion no valida.\n");
+                    printError("Descripcion no valida.\n");
             } while (validarCadena(servicio.descripcion));
             
             do
             {
                 printf("Precio: ");
                 scanf("%f", &servicio.precio);
-                if (validarPrecio(servicio.precio))
-                    printf("Error: Precio debe ser mayor a 0.\n");
             } while (validarPrecio(servicio.precio));
             
             fflush(stdin);
@@ -651,8 +643,11 @@ void AgregarServicio(FILE *fptr)
             printf("Servicio agregado correctamente.\n");
         }
 
-        printf("Deseas agregar otro servicio? (s/n): ");
-        scanf(" %c", &continuar);
+       	do{
+       		
+       		printf("Deseas agregar otro servicio? (s/n): ");
+       		scanf(" %c", &continuar);
+		}while(validarSN(continuar));
     }
 }
 
@@ -668,10 +663,14 @@ void ConsultarServicio(FILE *fptr)
         printf("1. Buscar por clave\n");
         printf("2. Buscar por descripcion\n");
         printf("3. Salir\n");
-        printf("Selecciona una opcion: ");
-        scanf("%d", &opcion);
-        fflush(stdin);
+		do
+		{
+			printf("Selecciona una opcion: ");
+	        scanf("%d", &opcion);
+	        fflush(stdin);
 
+		}while(validarOpcion3(opcion));
+		
         switch (opcion)
         {
         case 1:

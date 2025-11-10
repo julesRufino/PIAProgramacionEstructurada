@@ -14,6 +14,31 @@ void printError(const char *mensaje)
     fflush(stdout);         
 }
 
+bool validarSN(char opcion)
+{
+	bool validacion = false;
+	
+	if(opcion != 'S' || opcion != 's' || opcion != 'n' || opcion != 'N')
+	{
+		validacion = true;
+		printError("Error, ingrese opciones validas (s/n)\n");
+	}
+	
+	return validacion;
+}
+
+bool validarOpcion3(int opcion)
+{
+	bool validacion = false;
+	
+	if(opcion < 1 || opcion > 3)
+	{
+		validacion = true;
+		printError("Opcion fuera de rango (1-3).\n");
+	}
+	
+	return validacion;
+}
 
 bool validarOpcionMenu(int opcion)
 {
@@ -22,7 +47,7 @@ bool validarOpcionMenu(int opcion)
     if(opcion < 1 || opcion > 6)
     {
         validacion = true;
-        printError("Opcion del menu fuera de rango (1-6).");
+        printError("Opcion del menu fuera de rango (1-6).\n");
     }
         
 	return validacion;
@@ -37,7 +62,7 @@ bool validarSubmenu(char subopcion)
     if(subopcion != 'A' && subopcion != 'B' && subopcion != 'M' && subopcion != 'D' && subopcion != 'S')
     {
         validacion = true;
-        printError("Subopcion invalida. Use A, B, M, D o S.");
+        printError("Subopcion invalida. Use A, B, M, D o S.\n");
     }
 	
 	return validacion;
@@ -52,7 +77,7 @@ bool ValidarSubmenuReporte(char subopcion)
        subopcion != 'e' && subopcion != 'f' && subopcion != 'g' && subopcion != 'h')
        {
         validacion = true;
-        printError("Subopcion invalida. Use a, b, c, d, e, f, g o h.");
+        printError("Subopcion invalida. Use a, b, c, d, e, f, g o h.\n");
        }
 
     return validacion;
@@ -64,10 +89,10 @@ void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FIL
 
     if((*fClientes = fopen("clientes.dat", "r+")) == NULL)
     {
-        printf("Archivo 'clientes.dat' no encontrado. Creando nuevo archivo...\n");
+        printError("Archivo 'clientes.dat' no encontrado. Creando nuevo archivo...\n");
         *fClientes = fopen("clientes.dat", "w+");
         if(*fClientes == NULL)
-            printf("ERROR al crear el archivo 'clientes.dat'.\n");
+            printError("al crear el archivo 'clientes.dat'.\n");
         else
         {
             struct DatosCliente vacio = {0, "", "", "", "", "", "", "", "", ""};
@@ -79,10 +104,10 @@ void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FIL
 
     if((*fEmpleados = fopen("empleados.dat", "r+")) == NULL)
     {
-        printf("Archivo 'empleados.dat' no encontrado. Creando nuevo archivo...\n");
+        printError("Archivo 'empleados.dat' no encontrado. Creando nuevo archivo...\n");
         *fEmpleados = fopen("empleados.dat", "w+");
         if(*fEmpleados == NULL)
-            printf("ERROR al crear el archivo 'empleados.dat'.\n");
+            printError("al crear el archivo 'empleados.dat'.\n");
         else
         {
             struct DatosEmpleado vacio = {0, "", "", "", "", "", "", "", "", "", ""};
@@ -94,10 +119,10 @@ void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FIL
 
     if((*fServicios = fopen("servicios.dat", "r+")) == NULL)
     {
-        printf("Archivo 'servicios.dat' no encontrado. Creando nuevo archivo...\n");
+        printError("Archivo 'servicios.dat' no encontrado. Creando nuevo archivo...\n");
         *fServicios = fopen("servicios.dat", "w+");
         if(*fServicios == NULL)
-            printf("ERROR al crear el archivo 'servicios.dat'.\n");
+            printError("al crear el archivo 'servicios.dat'.\n");
         else
         {
             struct DatosServicio vacio = {0, "", 0.0, ""};
@@ -109,10 +134,10 @@ void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FIL
 
     if((*fAgenda = fopen("agenda.dat", "r+")) == NULL)
     {
-        printf("Archivo 'agenda.dat' no encontrado. Creando nuevo archivo...\n");
+        printError("Archivo 'agenda.dat' no encontrado. Creando nuevo archivo...\n");
         *fAgenda = fopen("agenda.dat", "w+");
         if(*fAgenda == NULL)
-            printf("ERROR al crear el archivo 'agenda.dat'.\n");
+            printError("al crear el archivo 'agenda.dat'.\n");
         else
         {
             struct DatosAgenda vacio = {0, 0, 0, 0, "", "", ""};
@@ -142,7 +167,7 @@ bool validarPuesto(char *puestoF)
        strcmp(puestoUpper, "MAQUILLADOR") != 0)
        {
         verificacion = true;
-        printError("Puesto invalido. Use ESTILISTA, COLORISTA, RECEPCIONISTA, COORDINADOR o MAQUILLADOR.");
+        printError("Puesto invalido. Use ESTILISTA, COLORISTA, RECEPCIONISTA, COORDINADOR o MAQUILLADOR.\n");
        }
 
     return verificacion;
@@ -166,7 +191,7 @@ bool fechaEnRango(char *fecha, char *inicio, char *fin)
     if(f < fi || f > ff)
     {
         verificacion = true;
-        printError("Fecha fuera de rango.");
+        printError("Fecha fuera de rango.\n");
     }
         
     return verificacion;
@@ -179,7 +204,7 @@ bool validarClave(int clave)
     if(clave < 1 || clave > 100)
     {
         validacion = true;
-        printError("Clave fuera de rango (1-100).");
+        printError("Clave fuera de rango (1-100).\n");
     }
     
     return validacion;
@@ -193,7 +218,7 @@ bool validarCadena(char *cadena)
     if(strlen(cadena) == 0)
     {
         validacion = true;
-        printError("Cadena vacia.");
+        printError("Cadena vacia.\n");
     }
         
     while(cadena[i] != '\0')
@@ -201,7 +226,7 @@ bool validarCadena(char *cadena)
         if(!isalpha(cadena[i]) && !isspace(cadena[i]))
         {
             validacion = true;
-            printError("Cadena contiene caracteres invalidos (solo letras y espacios).");
+            printError("Cadena contiene caracteres invalidos (solo letras y espacios).\n");
         }
         i++;
     }
@@ -218,7 +243,7 @@ bool validarTelefono(char *telefono)
     if(strlen(telefono) != 10)
     {
         validacion = true;
-        printError("Telefono debe tener 10 digitos.");
+        printError("Telefono debe tener 10 digitos.\n");
     }
         
     while(telefono[i] != '\0')
@@ -226,7 +251,7 @@ bool validarTelefono(char *telefono)
         if(!isdigit(telefono[i]))
         {
             validacion = true;
-            printError("Telefono contiene caracteres invalidos");
+            printError("Telefono contiene caracteres invalidos\n");
         }
         i++;
     }
@@ -263,7 +288,7 @@ bool validarCorreo(char *correo)
         validacion = true;
         
     if (validacion)
-        printError("Correo electronico no valido.");
+        printError("Correo electronico no valido.\n");
     return validacion;
 }
 
@@ -275,7 +300,7 @@ bool validarNumero(char *numero)
     if(strlen(numero) == 0)
     {
         validacion = true;
-        printError("Numero vacio.");
+        printError("Numero vacio.\n");
     }
         
     while(numero[i] != '\0')
@@ -283,7 +308,7 @@ bool validarNumero(char *numero)
         if(!isdigit(numero[i]))
         {
             validacion = true;
-            printError("Numero contiene caracteres invalidos (solo digitos).");
+            printError("Numero contiene caracteres invalidos (solo digitos).\n");
         }
         i++;
     }
@@ -349,7 +374,7 @@ bool validarFecha(char *fecha)
             validacion = true;
     }
     if(validacion)
-        printError("Fecha no valida.");
+        printError("Fecha no valida.\n");
     return validacion;
 }
 
@@ -360,7 +385,7 @@ bool validarPrecio(float precio)
     if(precio <= 0)
     {
         validacion = true;
-        printError("Precio debe ser mayor que cero.");
+        printError("Precio debe ser mayor que cero.\n");
     }
         
     return validacion;
@@ -384,7 +409,7 @@ bool validarEstatus(char *estatus)
        strcmp(estatusUpper, "CANCELADO") != 0)
        {
         validacion = true;
-        printError("Estatus invalido. Use PROGRAMADO, REALIZADO o CANCELADO.");
+        printError("Estatus invalido. Use PROGRAMADO, REALIZADO o CANCELADO.\n");
        }
         
     return validacion;

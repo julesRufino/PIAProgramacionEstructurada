@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "estructuras.h"
 
-void mostrarError(char *);
 void imprimirMenu();
 void imprimirSubMenu(char *);
 void imprimirMenuReportes();

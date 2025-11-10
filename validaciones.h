@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+bool validarSN(char);
+bool validarOpcion3(int);
+void printError(const char *);
 void validarArchivos(FILE **fClientes, FILE **fEmpleados, FILE **fServicios, FILE **fAgenda);
 bool validarPuesto(char *puesto);
 bool fechaEnRango(char *fecha, char *inicio, char *fin);
