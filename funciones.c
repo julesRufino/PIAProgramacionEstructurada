@@ -1081,7 +1081,9 @@ void menuReportes(char opcionF)
                     "Clave", "Nombre", "Puesto", "FechaContrat.", "Telefono", "Correo");
             printf("----------------------------------------------------------------------------\n");
             
-            while(fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr))
+			fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+            
+            while(!feof(empleadoPtr))
             {
                 if(empleado.clave != 0 && strcmp(empleado.puesto, puesto) == 0)
                 {
@@ -1093,6 +1095,9 @@ void menuReportes(char opcionF)
                             empleado.telefono,
                             empleado.correoElectronico);
                 }
+                
+                fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+
             }
             
             fclose(empleadoPtr);
@@ -1112,11 +1117,13 @@ void menuReportes(char opcionF)
             
             printf("\n%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
             printf("------------------------------------------------------------------------\n");
-
-            while(fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr))
+			
+			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+            while(!feof(agendaPtr))
             {
                 if(agenda.claveAgenda != 0 && strcmp(agenda.estatus, status) == 0)
                     imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
+                fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
             }
             
             fclose(agendaPtr);
@@ -1137,10 +1144,13 @@ void menuReportes(char opcionF)
             printf("\n%-25s%-25s%-25s\n", "Cliente", "Empleado", "Servicio");
             printf("------------------------------------------------------------------------\n");
 
-            while(fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr))
+			fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+            while(!feof(agendaPtr))
             {
                 if(agenda.claveAgenda != 0 && strcmp(agenda.fecha, periodo) == 0 && strcmp(agenda.estatus, "PROGRAMADO") == 0)
                     imprimirListaAgenda(&agenda.claveCliente, &agenda.claveEmpleado, &agenda.claveServicio);
+                fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+
             }
             
             fclose(agendaPtr);
@@ -1170,11 +1180,16 @@ void menuReportes(char opcionF)
             printf("\n%-25s%-15s%-15s\n", "Servicio", "Fecha", "Precio");
             printf("----------------------------------------------------\n");
             
-            while(fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr))
+            fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+            
+            while(!feof(agendaPtr))
             {
                 if (agenda.claveAgenda != 0 && strcmp(agenda.estatus, "REALIZADO") == 0 && 
                     !fechaEnRango(agenda.fecha, fechaVentaInicio, fechaVentaFin))
                     imprimirVenta(&agenda);
+                    
+            fread(&agenda, sizeof(struct DatosAgenda), 1, agendaPtr);
+
             }
             
             fclose(agendaPtr);
@@ -1187,7 +1202,10 @@ void menuReportes(char opcionF)
                 printf("Error al acceder a los archivos.\n");
             else
             {
-                while(fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr))
+            	
+            	fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
+            	
+                while(!feof(clientePtr))
                 {
                     if(cliente.clave != 0)
                     {
@@ -1196,6 +1214,9 @@ void menuReportes(char opcionF)
                                 cliente.telefono, cliente.correoElectronico, cliente.calle,
                                 cliente.numero, cliente.colonia, cliente.municipio, cliente.estado);
                     }
+                    
+                	fread(&cliente, sizeof(struct DatosCliente), 1, clientePtr);
+
                 }
                 fclose(archivoCliente);
                 fclose(clientePtr);
@@ -1210,7 +1231,8 @@ void menuReportes(char opcionF)
                 printf("Error al acceder a los archivos.\n");
             else
             {
-                while(fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr))
+            	fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+                while(!feof(empleadoPtr))
                 {
                     if(empleado.clave != 0)
                     {
@@ -1219,6 +1241,9 @@ void menuReportes(char opcionF)
                                 empleado.fechaContratacion, empleado.telefono, empleado.correoElectronico,
                                 empleado.calle, empleado.numero, empleado.colonia, empleado.municipio, empleado.estado);
                     }
+                    
+                    fread(&empleado, sizeof(struct DatosEmpleado), 1, empleadoPtr);
+
                 }
                 fclose(archivoEmpleado);
                 fclose(empleadoPtr);
